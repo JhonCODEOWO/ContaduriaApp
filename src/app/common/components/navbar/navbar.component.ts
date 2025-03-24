@@ -8,10 +8,11 @@ import {
 } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserSession } from '../../../auth/interfaces/user-session.interface';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
