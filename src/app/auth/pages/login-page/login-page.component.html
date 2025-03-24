@@ -1,0 +1,20 @@
+<section class="p-5 flex justify-center">
+    <form class="w-full flex flex-col max-w-[50rem]" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h1 class="text-4xl font-semibold text-center p-3">Inicia sesión.</h1>
+        <div class="form-control">
+            <label for="">Correo electrónico:</label>
+            <input type="email" name="" id="" placeholder="Ingresa tu correo electrónico" formControlName="email">
+            @if (formUtils.isValidField('email', loginForm)) {
+                <p class="text-error">{{formUtils.getFieldError('email', loginForm)}}</p>
+            }
+        </div>
+        <div class="form-control">
+            <label for="">Contraseña:</label>
+            <input type="email" name="" id="" placeholder="Ingresa tu correo electrónico" formControlName="password">
+            @if (formUtils.isValidField('password', loginForm)) {
+                <p>{{formUtils.getFieldError('password', loginForm)}}</p>
+            }
+        </div>
+        <button type="submit" class="btn btn-success">Iniciar sesión</button>
+    </form>
+</section>

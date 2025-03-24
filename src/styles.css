@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@plugin "daisyui"{
+    themes: corporate --default
+};
+
+label {
+    @apply text-lg
+}
+
+input{
+    @apply outline-0 border border-base-300 p-2
+    /* outline-style: none; */
+}
+
+.form-control{
+    @apply flex flex-col gap-2 py-2
+}
