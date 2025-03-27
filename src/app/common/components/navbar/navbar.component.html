@@ -1,4 +1,5 @@
 <div class="navbar bg-base-100 shadow-sm">
+    @if (user() != null) {
     <div class="navbar-start">
         <div class="dropdown">
             <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -8,23 +9,32 @@
                 </svg>
             </div>
             <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                <li><a routerLink="admin" routerLinkActive="text-accent">Administración</a></li>
-                <li><a routerLink="employees" routerLinkActive="text-accent">Area laboral</a></li>
+                <li>
+                    <a routerLink="admin" routerLinkActive="bg-base-300">
+
+                        Administración
+                    </a>
+                </li>
+                <li><a routerLink="employees" routerLinkActive="bg-base-300">Area laboral</a></li>
             </ul>
         </div>
         <a class="btn btn-ghost text-xl">Contaduría</a>
     </div>
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
-            <li><a routerLink="admin" routerLinkActive="text-accent">Administración</a></li>
-            <li><a routerLink="employees" routerLinkActive="text-accent">Area laboral</a></li>
+            <li><a routerLink="admin" routerLinkActive="bg-base-300">Administración</a></li>
+            <li><a routerLink="employees" routerLinkActive="bg-base-300">Area laboral</a></li>
         </ul>
     </div>
     <div class="navbar-end">
         <div class="dropdown dropdown-end px-3">
             @if (user()) {
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#3889f8" fill-rule="evenodd" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10m-7-3a3 3 0 1 1-6 0a3 3 0 0 1 6 0m-3 11.5a8.46 8.46 0 0 0 4.807-1.489c.604-.415.862-1.205.51-1.848C16.59 15.83 15.09 15 12 15s-4.59.83-5.318 2.163c-.351.643-.093 1.433.511 1.848A8.46 8.46 0 0 0 12 20.5" clip-rule="evenodd"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
+                    <path fill="#3889f8" fill-rule="evenodd"
+                        d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10m-7-3a3 3 0 1 1-6 0a3 3 0 0 1 6 0m-3 11.5a8.46 8.46 0 0 0 4.807-1.489c.604-.415.862-1.205.51-1.848C16.59 15.83 15.09 15 12 15s-4.59.83-5.318 2.163c-.351.643-.093 1.433.511 1.848A8.46 8.46 0 0 0 12 20.5"
+                        clip-rule="evenodd" />
+                </svg>
             </div>
             }
             <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
@@ -38,4 +48,5 @@
             </ul>
         </div>
     </div>
+    }
 </div>

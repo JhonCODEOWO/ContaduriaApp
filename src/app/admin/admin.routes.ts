@@ -3,6 +3,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { HomeAdminPageComponent } from './pages/home-admin-page/home-admin-page.component';
 import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
+import { TaxesPageComponent } from './pages/taxes-page/taxes-page.component';
 
 export const adminRoutes: Routes = [
     {
@@ -20,6 +21,10 @@ export const adminRoutes: Routes = [
             {
                 path: 'clients',
                 component: ClientsPageComponent
+            },
+            {
+                path: 'taxes',
+                component: TaxesPageComponent
             }
         ]
     },

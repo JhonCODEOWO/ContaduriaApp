@@ -9,9 +9,17 @@ import { ClientsService } from '../../../clients/services/clients.service';
 export class ClientsPageComponent {
   clientsService = inject(ClientsService);
 
-  loadClients = effect(()=> {
-    this.clientsService.getClients().subscribe( data =>{
-      console.log(data);
+  loadClients = effect((onCleanup)=> {
+    const requestClients = this.getClients();
+
+    onCleanup(()=> {
+      requestClients.unsubscribe();
     })
   })
+
+  getClients(){
+    return this.clientsService.getClients().subscribe( data =>{
+      console.log(data);
+    })
+  }
 }
