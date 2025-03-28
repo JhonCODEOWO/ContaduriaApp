@@ -1,5 +1,5 @@
 <div class="navbar bg-base-100 shadow-sm">
-    @if (user() != null) {
+    @if (this.authService.user()) {
     <div class="navbar-start">
         <div class="dropdown">
             <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -28,7 +28,7 @@
     </div>
     <div class="navbar-end">
         <div class="dropdown dropdown-end px-3">
-            @if (user()) {
+            @if (authService.user()) {
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
                     <path fill="#3889f8" fill-rule="evenodd"

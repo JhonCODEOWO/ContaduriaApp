@@ -17,7 +17,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class NavbarComponent {
   authService = inject(AuthService);
-  user = computed(() => this.authService.getUserLogged);
 
   logout() {
     this.authService.logout();
