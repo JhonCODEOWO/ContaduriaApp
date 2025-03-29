@@ -5,6 +5,7 @@ import { UserSession } from '../interfaces/user-session.interface';
 import { Router } from '@angular/router';
 import { AuthResponse } from '../interfaces/auth-response.interface';
 import { catchError, map, Observable, of, tap } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 type AuthStatus = 'authenticated' | 'not-authenticated' | 'checking';
 
@@ -17,18 +18,17 @@ export class AuthService {
   httpClient = inject(HttpClient);
   router = inject(Router);
 
-  constructor(){
-    this.checkStatus().subscribe((data)=>{
-      console.log(data);
-    })
-  }
-
   private _user = signal<UserSession | null>(null);
   private _authStatus = signal<AuthStatus>('checking');
-  private _token = signal<string | null>(this.getFromLocalStorage());
+  private _token = signal<string | null>(localStorage.getItem('token'));
 
   user = computed(() => this._user());
   token = computed(() => this._token());
+
+  //Ejecutar chequeo de status para recrear una sesión o bien dirigir usuario a renovarla
+  checkStatusResource = rxResource({
+    loader: () => this.checkStatus(),
+  });
 
   login(email: string, password:string): Observable<boolean> {
     return this.httpClient.post<AuthResponse>(`${environment.API_URL}${this.routeApi}/login`, {
@@ -41,11 +41,13 @@ export class AuthService {
   }
 
   checkStatus(): Observable<boolean>{
-    return this.httpClient.get<AuthResponse>(`${environment.API_URL}${this.routeApi}/session/check-status`, {
-      headers: {
-        Authorization: `Bearer ${this._token()}`
-      }
-    }).pipe(
+    console.log('CheckStatus token: ' + this.getFromLocalStorage());
+    if(!this.getFromLocalStorage()) {
+      this.logout();
+      return of(false);
+    }
+
+    return this.httpClient.get<AuthResponse>(`${environment.API_URL}${this.routeApi}/session/check-status`).pipe(
       map((response) => this.handleAuthSuccess(response)),
       catchError((error) => {
         return this.handleAuthError(error);
@@ -65,7 +67,6 @@ export class AuthService {
 
   private handleAuthError(error: any){
     this.logout();
-    // console.error(error);
     return of(false);
   }
 
@@ -85,6 +86,7 @@ export class AuthService {
   //Retorna el token almacenado en localStorage si existe
   getFromLocalStorage(): string | null{
     const tokenFromLocal = localStorage.getItem('token');
+    console.log('GetFromLocalStorage: ' + tokenFromLocal);
     if(!tokenFromLocal) return null;
 
     return tokenFromLocal;

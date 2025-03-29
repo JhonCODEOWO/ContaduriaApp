@@ -1,0 +1,30 @@
+<div class="overflow-x-auto">
+    <table class="table text-center">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nombre completo</th>
+          <th>Número de teléfono</th>
+          <th>Estado</th>
+          <th>Creado/Actualizado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (client of clients(); track client.id; let index = $index) {
+          <tr class="bg-base-200">
+            <th>{{index+1}}</th>
+            <td>{{client.fullName}}</td>
+            <td>{{client.phoneNumber}}</td>
+            <td>{{client.active}}</td>
+            <td>{{client.createdAt | date}}</td>
+            <td>
+              <button class="btn btn-info"></button>
+              <button class="btn btn-error"></button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>

@@ -3,6 +3,7 @@ import { EmployeesLayoutComponent } from './employees/layouts/employees-layout/e
 import { NotFoundComponent } from './common/components/not-found/not-found.component';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { VerifyAuthGuard } from './auth/guards/verify-auth.guard';
+import { isAuthenticatedGuard } from './auth/guards/isAuthenticated.guard';
 
 export const routes: Routes = [
     {
@@ -21,14 +22,13 @@ export const routes: Routes = [
     },
     {
         path:'login',
-        component: LoginPageComponent
-    },
-    {
-        path: '',
-        component: LoginPageComponent
+        component: LoginPageComponent,
+        canMatch: [
+            isAuthenticatedGuard
+        ]
     },
     {
         path: '**',
-        component: NotFoundComponent
+        redirectTo: 'login'
     }
 ];

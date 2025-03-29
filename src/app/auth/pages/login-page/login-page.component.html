@@ -3,21 +3,7 @@
     <div class="divider"></div>
     <form class="w-full flex flex-col max-w-[50rem] bg-base-200 p-5 rounded" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <app-input-field id="email" lblText="Correo electrónico:" type="email" [formGroup]="loginForm" placeholder="Ingresa el correo electrónico de tu cuenta"/>
-        <!-- <div class="form-control">
-            <label for="">Correo electrónico:</label>
-            <input type="email" name="" id="" placeholder="Ingresa tu correo electrónico" formControlName="email">
-            @if (formUtils.isValidField('email', loginForm)) {
-                <p class="text-error">{{formUtils.getFieldError('email', loginForm)}}</p>
-            }
-        </div> -->
-        <!-- <div class="form-control">
-            <label for="">Contraseña:</label>
-            <input type="email" name="" id="" placeholder="Ingresa tu correo electrónico" formControlName="password">
-            @if (formUtils.isValidField('password', loginForm)) {
-                <p>{{formUtils.getFieldError('password', loginForm)}}</p>
-            }
-        </div> -->
         <app-input-field id="password" lblText="Contraseña:" type="password" [formGroup]="loginForm" placeholder="Contraseña de la cuenta"/>
-        <button type="submit" class="btn btn-success">Iniciar sesión</button>
+        <button type="submit" class="btn btn-success mt-4">Iniciar sesión</button>
     </form>
 </section>
