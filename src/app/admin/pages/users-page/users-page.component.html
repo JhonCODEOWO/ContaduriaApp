@@ -1,1 +1,7 @@
-<p>users-page works!</p>,
+<div>
+    <div class="flex justify-between">
+        <app-title title="Control de usuarios"/>
+        <crud-create-btn link=""/>
+    </div>
+    <users-list [users]="userResponse()?.data ?? []"/>
+</div>

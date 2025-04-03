@@ -1,3 +1,5 @@
+import { User } from "../../users/interfaces/user.interface";
+
 export interface Client {
     id:           string;
     fullName:     string;
@@ -7,4 +9,5 @@ export interface Client {
     active:       boolean;
     createdAt:    Date;
     updatedAt:    Date;
+    created_by: User;
 }

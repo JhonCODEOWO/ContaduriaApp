@@ -8,6 +8,7 @@
           <th>Número de teléfono</th>
           <th>Estado</th>
           <th>Creado/Actualizado</th>
+          <th>Creado por:</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -19,6 +20,7 @@
             <td>{{client.phoneNumber}}</td>
             <td>{{client.active}}</td>
             <td>{{client.createdAt | date}}</td>
+            <td>{{client.created_by.name}}</td>
             <td>
               <button class="btn btn-info"></button>
               <button class="btn btn-error"></button>

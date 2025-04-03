@@ -1,0 +1,12 @@
+<div class="flex justify-between alert" [class.alert-success]="user().active" [class.bg-error]="!user().active">
+    <div class="avatar avatar-placeholder">
+        <div class="bg-base-content text-neutral-content rounded-full w-16">
+            <span class="text-xl">{{user().name[0]}}</span>
+        </div>
+    </div>
+
+    <div class="flex flex-col">
+        <h4 class="text-xl font-bold">{{user().name}}</h4>
+        <h4>{{user().lastName}}</h4>
+    </div>
+</div>

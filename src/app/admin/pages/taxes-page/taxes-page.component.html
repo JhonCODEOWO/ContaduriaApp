@@ -1,5 +1,22 @@
-<div class="container">
-    @if (taxesRegimes.length == 0) {
+<div class="container flex justify-between">
+    @if (taxesRegimes().length === 0 || taxesObligations().length === 0) {
         <p>No se obtuvieron datos para mostrar</p>
+    }
+    @else {
+        <div>
+            <app-title title="Regímenes Fiscales"/>
+            <crud-create-btn link="new"/>
+            @for (regime of taxesRegimes(); track regime.id) {
+                <tax-element [tax]="regime"/>
+            }
+        </div>
+
+        <div>
+            <app-title title="Obligaciones fiscales"/>
+            <crud-create-btn link="new"/>
+            @for (obligation of taxesObligations(); track obligation.id) {
+                <obligation-element [obligation]="obligation"/>
+            }
+        </div>
     }
 </div>

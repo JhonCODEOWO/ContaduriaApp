@@ -21,11 +21,15 @@ export const routes: Routes = [
         ]
     },
     {
-        path:'login',
-        component: LoginPageComponent,
+        path: 'auth',
+        loadChildren: () => import('./auth/auth.routes'),
         canMatch: [
             isAuthenticatedGuard
         ]
+    },
+    {
+        path:'login',
+        component: LoginPageComponent,
     },
     {
         path: '**',

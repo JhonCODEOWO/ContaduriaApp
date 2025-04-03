@@ -2,10 +2,11 @@ import { Component, effect, inject } from '@angular/core';
 import { ClientsService } from '../../../clients/services/clients.service';
 import { ClientTableComponent } from "../../../clients/components/client-table/client-table.component";
 import { Client } from '../../../clients/interfaces/client.interface';
+import { TitleComponent } from "../../../common/components/title/title.component";
 
 @Component({
   selector: 'app-clients-page',
-  imports: [ClientTableComponent],
+  imports: [ClientTableComponent, TitleComponent],
   templateUrl: './clients-page.component.html',
 })
 export class ClientsPageComponent {
