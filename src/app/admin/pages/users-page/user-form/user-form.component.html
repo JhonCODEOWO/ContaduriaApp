@@ -1,0 +1,33 @@
+<div>
+    <app-title title="Crear usuario..."/>
+    <form [formGroup]="userForm" class="max-w-[50rem] mx-auto my-0" (ngSubmit)="onSubmit()">
+        @if (userForm.errors && userForm.controls.password.touched) {
+            <alert-error [text]="formUtils.getFormError(userForm)"/>
+        }
+        <div class="grid grid-cols-2 items-center">
+            <div class="flex justify-center flex-col items-center gap-y-2">
+                <div class="avatar avatar-placeholder">
+                    <div class="bg-neutral text-neutral-content w-32 rounded-full">
+                            <span class="text-5xl">
+                                {{userForm.controls.name.value![0]}}
+                            </span>
+                            <span class="text-5xl">
+                                {{userForm.controls.lastName.value![0]}}
+                            </span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Guardar usuario</button>
+            </div>
+            <div>
+                <app-input-field id="name" lblText="Nombre" type="text" [formGroup]="userForm" />
+                <app-input-field id="lastName" lblText="Apellidos" type="text" [formGroup]="userForm" />
+            </div>
+        </div>
+        <app-input-field id="email" lblText="Correo electrónico" type="email" [formGroup]="userForm" />
+        <app-input-field id="phone_number" lblText="Numero telefónico" type="text" [formGroup]="userForm" />
+        <app-input-field id="password" lblText="Escriba la contraseña para el usuario" type="password"
+            [formGroup]="userForm" />
+        <app-input-field id="passwordVerify" lblText="Re-escribe la contraseña" type="password"
+            [formGroup]="userForm" />
+    </form>
+</div>

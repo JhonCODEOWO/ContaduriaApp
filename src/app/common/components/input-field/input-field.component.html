@@ -1,6 +1,6 @@
 <fieldset class="fieldset" [formGroup]="formGroup()">
     <label [htmlFor]="id()" class="fieldset-legend text-lg">{{lblText()}}</label>
-    <input [type]="type()" [id]="id()" [placeholder]="placeholder()" class="input input-primary w-full" [formControlName]="id()">
+    <input [type]="type()" [id]="id()" [placeholder]="placeholder()" class="input w-full" [formControlName]="id()" [class.input-error]="formUtils.isValidField(id(), formGroup())" [class.input-success]="!formUtils.isValidField(id(), formGroup())">
     @if (formUtils.isValidField(id(), formGroup())) {
         <p class="text-error">{{formUtils.getFieldError(id(), formGroup())}}</p>
     }

@@ -29,6 +29,7 @@ export class LoginPageComponent {
   });
 
   onSubmit() {
+    this.loginForm.markAllAsTouched();
     if (this.loginForm.invalid) return;
     let email: string = this.loginForm.controls['email'].value ?? '';
     let password: string = this.loginForm.controls['password'].value ?? '';

@@ -4,6 +4,7 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { HomeAdminPageComponent } from './pages/home-admin-page/home-admin-page.component';
 import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
 import { TaxesPageComponent } from './pages/taxes-page/taxes-page.component';
+import { UserFormComponent } from './pages/users-page/user-form/user-form.component';
 
 export const adminRoutes: Routes = [
     {
@@ -16,11 +17,15 @@ export const adminRoutes: Routes = [
             },
             {
                 path: 'users',
-                component: UsersPageComponent
+                component: UsersPageComponent,
+            },
+            {
+                path: 'users/:id',
+                component: UserFormComponent,
             },
             {
                 path: 'clients',
-                component: ClientsPageComponent
+                component: ClientsPageComponent,
             },
             {
                 path: 'taxes',

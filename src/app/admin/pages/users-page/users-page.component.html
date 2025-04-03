@@ -1,7 +1,9 @@
 <div>
-    <div class="flex justify-between">
-        <app-title title="Control de usuarios"/>
-        <crud-create-btn link=""/>
+    <div>
+        <div class="flex justify-between">
+            <app-title title="Control de usuarios"/>
+            <crud-create-btn link="/admin/users/new"/>
+        </div>
+        <users-list [users]="userResponse()?.data ?? []"/>
     </div>
-    <users-list [users]="userResponse()?.data ?? []"/>
 </div>

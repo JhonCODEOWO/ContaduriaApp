@@ -6,6 +6,17 @@ export class FormUtils {
   static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
 
+  static getFormError(formGroup: FormGroup): string{
+    const errors = formGroup.errors ?? {};
+      for(const key of Object.keys(errors)){
+        switch(key){
+          case 'passwordsNotEqual':
+            return 'Las contraseñas no coinciden'
+        } 
+      }
+    return '';
+  }
+
   //Métodos de apoyo para errores
   static getTextError(errors: ValidationErrors){
     for(const key of Object.keys(errors)){
@@ -37,8 +48,12 @@ export class FormUtils {
 
         case 'notStrider':
           return 'No se permite el uso de strider';
+        
+         case 'maxlength':
+          return `La longitud no debe exceder los ${errors['maxlength'].requiredLength} caracteres`;
 
         default:
+          console.log(errors);
           return `Error sin formato en FormUtils: ${key}`
       }
     }
@@ -78,6 +93,7 @@ export class FormUtils {
       //Obtener controls del FormGroup
       const field1Value = formGroup.get(field)?.value;
       const field2Value = formGroup.get(field2)?.value;
+      console.log(field1Value, field2Value);
 
       //Realizar operaciones para ver si se cumple la validación deseada
       return field1Value === field2Value ? null : {

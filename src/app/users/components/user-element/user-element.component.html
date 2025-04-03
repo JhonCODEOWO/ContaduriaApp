@@ -5,8 +5,8 @@
         </div>
     </div>
 
-    <div class="flex flex-col">
+    <a class="flex flex-col" [routerLink]="['/admin/users', user().id]">
         <h4 class="text-xl font-bold">{{user().name}}</h4>
         <h4>{{user().lastName}}</h4>
-    </div>
+    </a>
 </div>
