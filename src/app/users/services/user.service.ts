@@ -16,6 +16,7 @@ const newUser: User = {
   active: false,
   createdAt: new Date,
   updatedAt: new Date,
+  roles: [],
 }
 
 @Injectable({
@@ -41,5 +42,19 @@ export class UsersService {
   getUser(id: string): Observable<User>{
     if(id == 'new') return of(newUser);
     return this.httpClient.get<User>(`${environment.API_URL}/auth/${id}`);
+  }
+
+  updateUser(id: string, dataUpdate: Partial<User>): Observable<User>{
+    return this.httpClient.patch<User>(`${environment.API_URL}/auth/${id}`, {
+      ...dataUpdate
+    });
+  }
+
+  disableUser(id: string): Observable<boolean>{
+    return this.httpClient.delete<boolean>(`${environment.API_URL}/auth/disable/${id}`);
+  }
+
+  verifyEmail(email: string): Observable<boolean>{
+    return this.httpClient.get<boolean>(`${environment.API_URL}/auth/verifyAvailableEmail/${email}`);
   }
 }
