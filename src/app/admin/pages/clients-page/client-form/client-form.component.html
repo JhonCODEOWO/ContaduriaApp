@@ -1,1 +1,11 @@
-<p>client-form works!</p>,
+@if (isEditing()) {
+    <app-title title="Editando cliente..."/>
+}
+
+<form [formGroup]="clientForm" (ngSubmit)="onClientSubmit()">
+    <app-input-field id="fullName" lblText="Nombre completo" placeholder="Escribe el nombre completo" [formGroup]="clientForm" type="text"/>
+    <app-input-field id="sat_password" lblText="Contraseña SAT" placeholder="Escribe la contraseña de acceso a sat del cliente" [formGroup]="clientForm" type="text"/>
+    <app-input-field id="rfc" lblText="RFC" placeholder="Escribe el rfc del cliente" [formGroup]="clientForm" type="text"/>
+    <app-input-field id="phoneNumber" lblText="Número telefónico" placeholder="Teléfono de contacto" [formGroup]="clientForm" type="text"/>
+    <button type="submit" class="btn mt-5" [class.btn-success]="!isEditing()" [class.btn-warning]="isEditing()">{{(!isEditing())? 'Guardar': 'Actualizar'}}</button>
+</form>

@@ -1,8 +1,8 @@
-import { AbstractControl, FormArray, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, FormGroupName, ValidationErrors } from '@angular/forms';
 
 export class FormUtils {
   //Expresiones regulares
-  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+  static namePattern = '^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)+$';
   static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
 
@@ -41,7 +41,10 @@ export class FormUtils {
           if(patternData === FormUtils.notOnlySpacesPattern) {
             return 'No se permiten espacios para este campo.';
           }
-          return 'Error de patrón contra expresión regular, no se ha controlado la respuesta aún';
+          if (patternData === FormUtils.namePattern) {
+            return 'Introduce un nombre con apellido(s)en este campo sin dejar espacios vacíos.'
+          }
+          return 'Error de patrón contra expresión regular, no se ha controlado la respuesta aún ' + patternData;
 
         case 'emailTaken':
           return 'El correo electrónico ya ha sido utilizado por lo que no puede utilizarse.';

@@ -1,4 +1,5 @@
-<div class="overflow-x-auto">
+@if (clients().length > 0) {
+  <div class="overflow-x-auto">
     <table class="table text-center">
       <!-- head -->
       <thead>
@@ -18,15 +19,41 @@
             <th>{{index+1}}</th>
             <td>{{client.fullName}}</td>
             <td>{{client.phoneNumber}}</td>
-            <td>{{client.active}}</td>
-            <td>{{client.createdAt | date}}</td>
-            <td>{{client.created_by.name}}</td>
             <td>
-              <button class="btn btn-info"></button>
-              <button class="btn btn-error"></button>
+              @if (client.active) {
+                <div aria-label="status" class="status status-xl status-success"></div>
+              } @else {
+                <div aria-label="status" class="status status-xl status-error"></div>
+              }
+            </td>
+            <td>
+              {{client.createdAt | date}}
+            </td>
+            @if (client.created_by) {
+              <td>{{client.created_by.name}}</td>
+            }
+            <td>
+              <a class="btn btn-info" [routerLink]="['/admin/clients/', client.id]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 21q-.425 0-.712-.288T3 20v-2.425q0-.4.15-.763t.425-.637L16.2 3.575q.3-.275.663-.425t.762-.15t.775.15t.65.45L20.425 5q.3.275.437.65T21 6.4q0 .4-.138.763t-.437.662l-12.6 12.6q-.275.275-.638.425t-.762.15zM17.6 7.8L19 6.4L17.6 5l-1.4 1.4z"/></svg>
+              </a>
+              <button class="btn" [class.btn-error]="client.active" [class.btn-success]="!client.active" (click)="onClickDelete(client.id)">
+                @if (client.active) {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg>
+                } @else {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l5 5L20 7"/></svg>
+                }
+              </button>
             </td>
           </tr>
-        }
+        } 
       </tbody>
     </table>
   </div>
+} @else {
+  <div role="alert" class="alert alert-info">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <span>No hay registros disponibles para mostrar</span>
+  </div>
+}

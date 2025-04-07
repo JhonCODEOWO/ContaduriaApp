@@ -5,6 +5,8 @@ import { HomeAdminPageComponent } from './pages/home-admin-page/home-admin-page.
 import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
 import { TaxesPageComponent } from './pages/taxes-page/taxes-page.component';
 import { UserFormComponent } from './pages/users-page/user-form/user-form.component';
+import { ClientFormComponent } from './pages/clients-page/client-form/client-form.component';
+import { ClientDetailsComponent } from './pages/clients-page/client-details/client-details.component';
 
 export const adminRoutes: Routes = [
     {
@@ -26,6 +28,10 @@ export const adminRoutes: Routes = [
             {
                 path: 'clients',
                 component: ClientsPageComponent,
+            },
+            {
+                path: 'clients/:id',
+                component: ClientDetailsComponent
             },
             {
                 path: 'taxes',

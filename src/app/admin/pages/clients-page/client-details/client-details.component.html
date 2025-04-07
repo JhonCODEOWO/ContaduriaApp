@@ -1,0 +1,5 @@
+<div>
+    @if (client()) {
+        <client-form [client]="client()!" (newDataClient)="dataClientChanged($event)"/>
+    }
+</div>

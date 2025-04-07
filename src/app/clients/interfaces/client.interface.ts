@@ -9,5 +9,5 @@ export interface Client {
     active:       boolean;
     createdAt:    Date;
     updatedAt:    Date;
-    created_by: User;
+    created_by?: User;
 }
