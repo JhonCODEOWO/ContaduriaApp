@@ -54,6 +54,10 @@ export class UsersService {
     return this.httpClient.delete<boolean>(`${environment.API_URL}/auth/disable/${id}`);
   }
 
+  enableUser(id: string): Observable<boolean>{
+    return this.httpClient.patch<boolean>(`${environment.API_URL}/auth/enable/${id}`, {});
+  }
+
   verifyEmail(email: string): Observable<boolean>{
     return this.httpClient.get<boolean>(`${environment.API_URL}/auth/verifyAvailableEmail/${email}`);
   }

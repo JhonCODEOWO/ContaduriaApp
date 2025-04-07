@@ -9,4 +9,8 @@ import { UserElementComponent } from '../user-element/user-element.component';
 })
 export class UsersListComponent {
   users = input.required<User[]>()
+
+  userChanged(event: User){
+    console.log(event);
+  }
 }
