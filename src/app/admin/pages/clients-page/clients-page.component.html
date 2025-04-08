@@ -1,7 +1,9 @@
 <div>
     <div class="flex justify-between">
-        <app-title title="Clientes"/>
-        <crud-create-btn link="/admin/clients/new"/>
+        <app-title title="Clientes" />
+        <crud-create-btn link="/admin/clients/new" />
     </div>
-    <client-table [clients]="clients()" (onClientDelete)="clientDeleted($event)"/>
+    <client-table [clients]="clients()" (onClientDeleted)="clientDeleted($event)"
+        (onUserClick)="usersClicked($event)" />
+    <client-modal-user [usersAndClient]="usersAndClient()"/>
 </div>

@@ -16,6 +16,20 @@ const newClient: Client = {
   updatedAt: new Date()
 }
 
+/**
+ * Representa el body necesario para relacionar un cliente a un usuario
+ */
+export interface ClientWithUserBody {
+  /**
+   * Identificador único del cliente, debe ser UUID.
+   */
+  clientID: string,
+    /**
+   * Identificador único del usuario, debe ser UUID.
+   */
+  userID: string,
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,5 +68,13 @@ export class ClientsService {
 
   disableClient(id: string): Observable<boolean> {
     return this.http.delete<boolean>(`${this.route}/${id}`);
+  }
+
+  assignUser(clientWithUser: ClientWithUserBody): Observable<Client | null>{
+    return this.http.post<Client>(`${this.route}/assign`, clientWithUser).pipe(
+      catchError(error => {
+        return of(null);
+      })
+    );
   }
 }

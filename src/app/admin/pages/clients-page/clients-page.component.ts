@@ -1,18 +1,22 @@
-import { Component, effect, inject, signal } from '@angular/core';
-import { ClientsService } from '../../../clients/services/clients.service';
-import { ClientTableComponent } from "../../../clients/components/client-table/client-table.component";
+import { AfterViewInit, Component, effect, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { ClientsService, ClientWithUserBody } from '../../../clients/services/clients.service';
+import { ClientTableComponent, UsersAndClient } from "../../../clients/components/client-table/client-table.component";
 import { Client } from '../../../clients/interfaces/client.interface';
 import { TitleComponent } from "../../../common/components/title/title.component";
 import { CreateBtnComponent } from "../../../common/components/crud/create-btn/create-btn.component";
+import { UserResponse } from '../../../users/interfaces/user-response.interface';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ClientModalUserComponent } from "./client-modal-user/client-modal-user.component";
 
 @Component({
   selector: 'app-clients-page',
-  imports: [ClientTableComponent, TitleComponent, CreateBtnComponent, CreateBtnComponent],
+  imports: [ClientTableComponent, TitleComponent, CreateBtnComponent, CreateBtnComponent, ReactiveFormsModule, ClientModalUserComponent],
   templateUrl: './clients-page.component.html',
 })
 export class ClientsPageComponent {
   clientsService = inject(ClientsService);
   clients = signal<Client[]>([]);
+  usersAndClient = signal<UsersAndClient | null>(null);
 
   loadClients = effect((onCleanup)=> {
     const requestClients = this.getClients();
@@ -36,4 +40,10 @@ export class ClientsPageComponent {
     
     client.active = (client.active)? false: true;
   }
+
+  usersClicked(usersWithClient: UsersAndClient){
+    this.usersAndClient.set(usersWithClient);
+  }
+
+
 }

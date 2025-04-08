@@ -1,23 +1,29 @@
 @if (clients().length > 0) {
   <div class="overflow-x-auto">
-    <table class="table text-center">
+    <table class="table text-center table-zebra">
       <!-- head -->
       <thead>
         <tr>
-          <th></th>
+          <th>#</th>
           <th>Nombre completo</th>
           <th>Número de teléfono</th>
           <th>Estado</th>
-          <th>Creado/Actualizado</th>
+          <th>Creado</th>
+          <th>Modificado</th>
           <th>Creado por:</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         @for (client of clients(); track client.id; let index = $index) {
-          <tr class="bg-base-200">
+          <tr>
             <th>{{index+1}}</th>
-            <td>{{client.fullName}}</td>
+            <td>
+              <div>
+                <h4 class="font-bold">{{client.fullName}}</h4>
+                <h5 class="font-light">{{client.rfc}}</h5>
+              </div>
+            </td>
             <td>{{client.phoneNumber}}</td>
             <td>
               @if (client.active) {
@@ -29,10 +35,13 @@
             <td>
               {{client.createdAt | date}}
             </td>
+            <td>
+              {{client.updatedAt| date}}
+            </td>
             @if (client.created_by) {
               <td>{{client.created_by.name}}</td>
             }
-            <td>
+            <td class="flex justify-center gap-x-2">
               <a class="btn btn-info" [routerLink]="['/admin/clients/', client.id]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 21q-.425 0-.712-.288T3 20v-2.425q0-.4.15-.763t.425-.637L16.2 3.575q.3-.275.663-.425t.762-.15t.775.15t.65.45L20.425 5q.3.275.437.65T21 6.4q0 .4-.138.763t-.437.662l-12.6 12.6q-.275.275-.638.425t-.762.15zM17.6 7.8L19 6.4L17.6 5l-1.4 1.4z"/></svg>
               </a>
@@ -42,6 +51,10 @@
                 } @else {
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l5 5L20 7"/></svg>
                 }
+              </button>
+
+              <button class="btn btn-primary" (click)="onUsersClick(client.id)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m-2.5-8.5q1.45 0 2.475-1.025T13 10t-1.025-2.475T9.5 6.5T7.025 7.525T6 10t1.025 2.475T9.5 13.5m7 1q1.05 0 1.775-.725T19 12t-.725-1.775T16.5 9.5t-1.775.725T14 12t.725 1.775t1.775.725M12 20q2.125 0 3.875-1t2.825-2.65q-.525-.15-1.075-.25T16.5 16q-1.325 0-3.2.775t-3 3.05q.425.1.85.138T12 20m-3.175-.65q.875-1.8 1.988-2.675T12.5 15.5q-.725-.225-1.463-.362T9.5 15q-1.125 0-2.225.275t-2.125.775q.65 1.075 1.588 1.938t2.087 1.362"/></svg>
               </button>
             </td>
           </tr>

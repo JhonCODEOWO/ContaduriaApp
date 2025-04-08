@@ -1,0 +1,29 @@
+    <!-- Open the modal using ID.showModal() method -->
+    @if (usersAndClient()) {
+        <dialog class="modal" #modalUsers>
+            <div class="modal-box">
+                <h3 class="text-lg font-bold">Asignar cliente a un usuario</h3>
+                <div class="modal-action">
+                    <form class="w-full flex flex-col gap-y-2" [formGroup]="userToClientForm" (ngSubmit)="onSubmit()">
+                        @if (userToClientForm.errors) {
+                            <alert-error [text]="formUtils.getFormError(userToClientForm)"/>
+                        }
+                        <input type="hidden" [value]="usersAndClient()!.client" formControlName="clientID">
+                        <fieldset class="fieldset">
+                            <legend class="fieldset-legend">Usuarios disponibles</legend>
+                            <select class="select" formControlName="userID">
+                                <option disabled selected>Pick a browser</option>
+                                @for (user of usersAndClient()!.users; track user.id) {
+                                    <option [value]="user.id">{{user.name}}</option>
+                                }
+                            </select>
+                        </fieldset>
+                        <div class="flex justify-between mt-4">
+                            <button class="btn btn-success" type="submit">Aceptar</button>
+                            <button class="btn btn-warning" (click)="onCloseModal()" type="button">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+    }

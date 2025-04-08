@@ -11,7 +11,12 @@ export class FormUtils {
       for(const key of Object.keys(errors)){
         switch(key){
           case 'passwordsNotEqual':
-            return 'Las contraseñas no coinciden'
+            return 'Las contraseñas no coinciden';
+
+          case 'exception':
+            return 'Ha ocurrido un problema no controlado, comunícate con el desarrollador'
+          default: 
+            return 'No se ha controlado el error';
         } 
       }
     return '';
