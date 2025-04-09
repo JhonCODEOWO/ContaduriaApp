@@ -12,7 +12,7 @@
             </div>
             <!-- Botones -->
             <div>
-                <button class="btn btn-error" (click)="onUnlinkClick(relation.client.id, relation.id)">X</button>
+                <button class="btn btn-error" (click)="onUnlinkClick(relation.client.id, relation.id ?? '')">X</button>
             </div>
         </li>
         }
