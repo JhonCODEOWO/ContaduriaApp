@@ -1,5 +1,5 @@
 @if (users().length != 0) {
-    <div class="grid grid-cols-5 gap-3">
+    <div class="grid grid-cols-4 gap-3">
         @for (user of users(); track user.id) {
             <user-element [user]="user" (changed)="userChanged($event)"/>
         }

@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { Client } from '../../interfaces/client.interface';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';

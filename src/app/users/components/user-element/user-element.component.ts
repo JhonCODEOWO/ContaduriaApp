@@ -2,6 +2,7 @@ import { Component, computed, inject, input, output } from '@angular/core';
 import { User } from '../../interfaces/user.interface';
 import { RouterLink } from '@angular/router';
 import { UsersService } from '../../services/user.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'user-element',
@@ -11,6 +12,7 @@ import { UsersService } from '../../services/user.service';
 export class UserElementComponent {
   user = input.required<User>();
   userService = inject(UsersService);
+  authService = inject(AuthService);
   changed = output<User>(); //Property to emit a user element with new values.
 
   roles = computed(() => {
@@ -22,11 +24,18 @@ export class UserElementComponent {
     return `${this.user().name[0]}${this.user().lastName[0]}`
   })
 
+  //Definir si el usuario recibido es igual al que está logeado
+  isTheSameUser = computed(() => {
+    const userAuthID = this.authService.user()?.id ?? '';
+    return (this.user().id === userAuthID)? true: false;
+  })
+
   onDelete(){
     
   }
 
   onDisable(id: string){
+    if(id === this.authService.user()?.id) return;
     this.userService.disableUser(id).subscribe( result => {
       this.user().active = false; 
       this.changed.emit(this.user());

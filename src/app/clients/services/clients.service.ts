@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Client } from '../interfaces/client.interface';
+import { ClientRelated } from '../interfaces/client-assigned.interface';
+import { UsersService } from '../../users/services/user.service';
+import { ClientRelatedResponse } from '../interfaces/client-related-response.interface';
 
 const newClient: Client = {
   id: 'new',
@@ -37,6 +40,7 @@ export class ClientsService {
   route = `${environment.API_URL}/clients`;
   http = inject(HttpClient);
   router = inject(Router);
+  userService = inject(UsersService);
   
   getClients(): Observable<Client[]>{
     return this.http.get<Client[]>(`${this.route}`).pipe(
@@ -76,5 +80,16 @@ export class ClientsService {
         return of(null);
       })
     );
+  }
+
+
+  getClientsAssignedToUser(id: string): Observable<ClientRelatedResponse>{
+    return this.userService.getUser(id).pipe(
+      switchMap(user => this.http.get<ClientRelatedResponse>(`${this.route}/assigned/${user.id}`))
+    );
+  }
+
+  unlinkClientFromUser(idClient: string, idUser: string): Observable<boolean>{
+    return this.http.delete<boolean>(`${this.route}/unlink/${idClient}/${idUser}`);
   }
 }

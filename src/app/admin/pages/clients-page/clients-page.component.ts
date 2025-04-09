@@ -6,7 +6,8 @@ import { TitleComponent } from "../../../common/components/title/title.component
 import { CreateBtnComponent } from "../../../common/components/crud/create-btn/create-btn.component";
 import { UserResponse } from '../../../users/interfaces/user-response.interface';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ClientModalUserComponent } from "./client-modal-user/client-modal-user.component";
+import { ClientModalUserComponent, ClientUserRelationDone } from "./client-modal-user/client-modal-user.component";
+import { User } from '../../../users/interfaces/user.interface';
 
 @Component({
   selector: 'app-clients-page',
@@ -33,7 +34,6 @@ export class ClientsPageComponent {
   }
 
   clientDeleted(id: string){
-
     //Encontrar el objeto que cambio en el arreglo del padre por indice
     const index = this.clients().findIndex(client => client.id === id);
     const client = this.clients()[index];
@@ -41,9 +41,22 @@ export class ClientsPageComponent {
     client.active = (client.active)? false: true;
   }
 
+  //Evento que controla cuando un hijo emite un valor UserAndClient y se asigna a la propiedad que toma el modal.
   usersClicked(usersWithClient: UsersAndClient){
     this.usersAndClient.set(usersWithClient);
   }
 
+  //Evento para controlar cuando a un usuario se le ha relacionado un cliente correctamente
+  clientAffected(relationDone: ClientUserRelationDone){
+    const client = this.findClient(this.clients(), relationDone.clientID) //Obtener cliente de la propiedad
+    //Si el objeto recibido por el evento contiene un usuario y no indefinido
+    if(relationDone.user){
+      client.clientUser?.push({client: client, user: relationDone.user}); //Añadir al indice del cliente los datos recibidos
+    }
+  }
 
+  findClient(clients: Client[], id: string) {
+    const index = this.clients().findIndex(client => client.id === id);
+    return clients[index];
+  }
 }

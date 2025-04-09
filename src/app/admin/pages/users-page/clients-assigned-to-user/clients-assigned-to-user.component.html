@@ -1,0 +1,21 @@
+@if (!isLoading()) {
+<app-title title="Clientes relacionados a: {{userOwner()?.name}}" />
+
+<div class="max-w-[40rem] my-0 mx-auto">
+    <ul class="list">
+        @for (relation of clientsRelated(); track relation.id) {
+        <li class="flex justify-between">
+            <!-- Datos del cliente -->
+            <div>
+                <p class="text-2xl">{{relation.client.fullName}}</p>
+                <p>Asignado desde: {{relation.relatedAt | date}}</p>
+            </div>
+            <!-- Botones -->
+            <div>
+                <button class="btn btn-error" (click)="onUnlinkClick(relation.client.id, relation.id)">X</button>
+            </div>
+        </li>
+        }
+    </ul>
+</div>
+}

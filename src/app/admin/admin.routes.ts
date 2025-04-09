@@ -7,6 +7,7 @@ import { TaxesPageComponent } from './pages/taxes-page/taxes-page.component';
 import { UserFormComponent } from './pages/users-page/user-form/user-form.component';
 import { ClientFormComponent } from './pages/clients-page/client-form/client-form.component';
 import { ClientDetailsComponent } from './pages/clients-page/client-details/client-details.component';
+import { ClientsAssignedToUserComponent } from './pages/users-page/clients-assigned-to-user/clients-assigned-to-user.component';
 
 export const adminRoutes: Routes = [
     {
@@ -20,14 +21,22 @@ export const adminRoutes: Routes = [
             {
                 path: 'users',
                 component: UsersPageComponent,
+                title: 'Usuarios'
             },
             {
                 path: 'users/:id',
                 component: UserFormComponent,
+                title: 'Manipular usuario'
+            },
+            {
+                path: 'users/assignedClientsTo/:id',
+                component: ClientsAssignedToUserComponent,
+                title: 'Administrar clientes asignados'
             },
             {
                 path: 'clients',
                 component: ClientsPageComponent,
+                title: 'Clientes'
             },
             {
                 path: 'clients/:id',

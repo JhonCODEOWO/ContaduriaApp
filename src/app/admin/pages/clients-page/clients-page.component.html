@@ -5,5 +5,5 @@
     </div>
     <client-table [clients]="clients()" (onClientDeleted)="clientDeleted($event)"
         (onUserClick)="usersClicked($event)" />
-    <client-modal-user [usersAndClient]="usersAndClient()"/>
+    <client-modal-user [usersAndClient]="usersAndClient()" (onClientAffected)="clientAffected($event)"/>
 </div>
