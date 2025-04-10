@@ -6,6 +6,7 @@ import { ClientsService } from '../../services/clients.service';
 import { User } from '../../../users/interfaces/user.interface';
 import { UsersService } from '../../../users/services/user.service';
 import { UserResponse } from '../../../users/interfaces/user-response.interface';
+import { PhoneNumberPipe } from '../../../common/pipes/phone-number.pipe';
 
 export interface UsersAndClient {
   users: User[];
@@ -14,7 +15,7 @@ export interface UsersAndClient {
 
 @Component({
   selector: 'client-table',
-  imports: [DatePipe, RouterLink],
+  imports: [DatePipe, RouterLink, PhoneNumberPipe],
   templateUrl: './client-table.component.html',
 })
 export class ClientTableComponent {

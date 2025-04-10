@@ -24,7 +24,7 @@
                 <h5 class="font-light">{{client.rfc}}</h5>
               </div>
             </td>
-            <td>{{client.phoneNumber}}</td>
+            <td>{{client.phoneNumber  | PhoneNumber}}</td>
             <td>
               @if (client.active) {
                 <div aria-label="status" class="status status-xl status-success"></div>
@@ -33,10 +33,10 @@
               }
             </td>
             <td>
-              {{client.createdAt | date}}
+              {{client.createdAt | date: 'shortDate'}}
             </td>
             <td>
-              {{client.updatedAt| date}}
+              {{client.updatedAt| date: 'shortDate'}}
             </td>
             @if (client.created_by) {
               <td>{{client.created_by.name}}</td>
@@ -54,14 +54,18 @@
               </button>
 
                 @if (client.clientUser && client.clientUser.length === 0) {
-                  <button class="btn btn-primary" (click)="onUsersClick(client.id)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m-2.5-8.5q1.45 0 2.475-1.025T13 10t-1.025-2.475T9.5 6.5T7.025 7.525T6 10t1.025 2.475T9.5 13.5m7 1q1.05 0 1.775-.725T19 12t-.725-1.775T16.5 9.5t-1.775.725T14 12t.725 1.775t1.775.725M12 20q2.125 0 3.875-1t2.825-2.65q-.525-.15-1.075-.25T16.5 16q-1.325 0-3.2.775t-3 3.05q.425.1.85.138T12 20m-3.175-.65q.875-1.8 1.988-2.675T12.5 15.5q-.725-.225-1.463-.362T9.5 15q-1.125 0-2.225.275t-2.125.775q.65 1.075 1.588 1.938t2.087 1.362"/></svg>
-                  </button>
+                  <div class="tooltip" data-tip="Asignar usuario">
+                    <button class="btn btn-primary" (click)="onUsersClick(client.id)">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="6" r="4" fill="currentColor"/><path fill="currentColor" fill-rule="evenodd" d="M16.5 22c-1.65 0-2.475 0-2.987-.513C13 20.975 13 20.15 13 18.5s0-2.475.513-2.987C14.025 15 14.85 15 16.5 15s2.475 0 2.987.513C20 16.025 20 16.85 20 18.5s0 2.475-.513 2.987C18.975 22 18.15 22 16.5 22m.583-5.056a.583.583 0 1 0-1.166 0v.973h-.973a.583.583 0 1 0 0 1.166h.973v.973a.583.583 0 1 0 1.166 0v-.973h.973a.583.583 0 1 0 0-1.166h-.973z" clip-rule="evenodd"/><path fill="currentColor" d="M15.678 13.503c-.473.005-.914.023-1.298.074c-.643.087-1.347.293-1.928.875c-.582.581-.788 1.285-.874 1.928c-.078.578-.078 1.284-.078 2.034v.172c0 .75 0 1.456.078 2.034c.06.451.18.932.447 1.38H12c-8 0-8-2.015-8-4.5S7.582 13 12 13c1.326 0 2.577.181 3.678.503"/></svg>
+                    </button>
+                  </div>
                 } @else if(client.clientUser){
                   <!-- TODO: REDIRECCIONAR AL USUARIO PARA VISUALIZAR EL OWNER DEL CLIENTE -->
-                  <a class="btn btn-warning" [routerLink]="['/admin/users/assignedClientsTo', client.clientUser[0].user?.id]">
-                  
-                  </a>
+                  <div class="tooltip" data-tip="Visualizar usuario">
+                    <a class="btn btn-warning" [routerLink]="['/admin/users/assignedClientsTo', client.clientUser[0].user?.id]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="9.001" cy="6" r="4" fill="currentColor"/><ellipse cx="9.001" cy="17.001" fill="currentColor" rx="7" ry="4"/><path fill="currentColor" d="M21 17c0 1.657-2.036 3-4.521 3c.732-.8 1.236-1.805 1.236-2.998c0-1.195-.505-2.2-1.239-3.001C18.962 14 21 15.344 21 17M18 6a3 3 0 0 1-4.029 2.82A5.7 5.7 0 0 0 14.714 6c0-1.025-.27-1.987-.742-2.819A3 3 0 0 1 18 6.001"/></svg>
+                    </a>
+                  </div>
                 }
             </td>
           </tr>
