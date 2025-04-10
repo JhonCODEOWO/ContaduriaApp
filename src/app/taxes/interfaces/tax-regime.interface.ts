@@ -4,7 +4,7 @@ export interface TaxRegime {
     id:              string;
     name:            string;
     description:     string;
-    createdAt:       Date;
-    taxObligations: TaxObligation[];
+    createdAt?:       Date;
+    taxObligations?: TaxObligation[];
 }
 

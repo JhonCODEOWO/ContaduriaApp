@@ -1,0 +1,5 @@
+<form [formGroup]="regimeForm" (ngSubmit)="onSubmit()">
+    <app-input-field id="name" lblText="Nombre para el régimen" placeholder="Nombre corto para régimen" [formGroup]="regimeForm" type="text"/>
+    <app-textarea-input id="description" lblText="Descripción del régimen" placeholder="Descripción de el régimen" [formGroup]="regimeForm"/>
+    <button type="submit" class="btn btn-success">Guardar</button>
+</form>

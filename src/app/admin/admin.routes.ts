@@ -8,6 +8,8 @@ import { UserFormComponent } from './pages/users-page/user-form/user-form.compon
 import { ClientFormComponent } from './pages/clients-page/client-form/client-form.component';
 import { ClientDetailsComponent } from './pages/clients-page/client-details/client-details.component';
 import { ClientsAssignedToUserComponent } from './pages/users-page/clients-assigned-to-user/clients-assigned-to-user.component';
+import { RegimeDataComponent } from './pages/taxes-page/regime-data/regime-data.component';
+import { ObligationDataComponent } from './pages/taxes-page/obligation-data/obligation-data.component';
 
 export const adminRoutes: Routes = [
     {
@@ -45,6 +47,14 @@ export const adminRoutes: Routes = [
             {
                 path: 'taxes',
                 component: TaxesPageComponent
+            },
+            {
+                path: 'taxes/regime/:id',
+                component: RegimeDataComponent
+            },
+            {
+                path: 'taxes/obligation/:id',
+                component: ObligationDataComponent
             }
         ]
     },

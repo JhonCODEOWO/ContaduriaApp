@@ -5,7 +5,7 @@
     @else {
         <div>
             <app-title title="Regímenes Fiscales"/>
-            <crud-create-btn link="new"/>
+            <crud-create-btn link="regime/new"/>
             @for (regime of taxesRegimes(); track regime.id) {
                 <tax-element [tax]="regime"/>
             }
@@ -13,7 +13,7 @@
 
         <div>
             <app-title title="Obligaciones fiscales"/>
-            <crud-create-btn link="new"/>
+            <crud-create-btn link="obligation/new"/>
             @for (obligation of taxesObligations(); track obligation.id) {
                 <obligation-element [obligation]="obligation"/>
             }

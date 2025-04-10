@@ -69,6 +69,7 @@ export class FormUtils {
     return null;
   }
 
+  //Returns true if the field contains errors and has touched
   static isValidField(fieldName: string, form: FormGroup): boolean | null {
     return form.controls[fieldName].errors && form.controls[fieldName].touched;
   }

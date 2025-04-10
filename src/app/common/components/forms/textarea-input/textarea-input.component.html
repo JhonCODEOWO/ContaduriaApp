@@ -1,0 +1,7 @@
+<fieldset class="fieldset" [formGroup]="formGroup()">
+    <legend class="fieldset-legend">{{lblText()}}</legend>
+    <textarea class="textarea h-24 w-full" [formControlName]="id()" [class.input-error]="formUtils.isValidField(id(), formGroup())" [class.input-success]="!formUtils.isValidField(id(), formGroup())" [placeholder]="placeholder()" ></textarea>
+    @if (formUtils.isValidField(id(), formGroup())) {
+        <p class="text-error">{{formUtils.getFieldError(id(), formGroup())}}</p>
+    }
+</fieldset>
