@@ -8,15 +8,16 @@ import { UserResponse } from '../../../users/interfaces/user-response.interface'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientModalUserComponent, ClientUserRelationDone } from "./client-modal-user/client-modal-user.component";
 import { User } from '../../../users/interfaces/user.interface';
+import { LoaderComponent } from '../../../common/components/loader/loader.component';
 
 @Component({
   selector: 'app-clients-page',
-  imports: [ClientTableComponent, TitleComponent, CreateBtnComponent, CreateBtnComponent, ReactiveFormsModule, ClientModalUserComponent],
+  imports: [ClientTableComponent, TitleComponent, CreateBtnComponent, CreateBtnComponent, ReactiveFormsModule, ClientModalUserComponent,LoaderComponent],
   templateUrl: './clients-page.component.html',
 })
 export class ClientsPageComponent {
   clientsService = inject(ClientsService);
-  clients = signal<Client[]>([]);
+  clients = signal<Client[] | null >(null);
   usersAndClient = signal<UsersAndClient | null>(null);
 
   loadClients = effect((onCleanup)=> {
@@ -35,8 +36,8 @@ export class ClientsPageComponent {
 
   clientDeleted(id: string){
     //Encontrar el objeto que cambio en el arreglo del padre por indice
-    const index = this.clients().findIndex(client => client.id === id);
-    const client = this.clients()[index];
+    const index = this.clients()!.findIndex(client => client.id === id);
+    const client = this.clients()![index];
     
     client.active = (client.active)? false: true;
   }
@@ -48,7 +49,7 @@ export class ClientsPageComponent {
 
   //Evento para controlar cuando a un usuario se le ha relacionado un cliente correctamente
   clientAffected(relationDone: ClientUserRelationDone){
-    const client = this.findClient(this.clients(), relationDone.clientID) //Obtener cliente de la propiedad
+    const client = this.findClient(this.clients()!, relationDone.clientID) //Obtener cliente de la propiedad
     //Si el objeto recibido por el evento contiene un usuario y no indefinido
     if(relationDone.user){
       client.clientUser?.push({client: client, user: relationDone.user}); //Añadir al indice del cliente los datos recibidos
@@ -56,7 +57,7 @@ export class ClientsPageComponent {
   }
 
   findClient(clients: Client[], id: string) {
-    const index = this.clients().findIndex(client => client.id === id);
+    const index = this.clients()!.findIndex(client => client.id === id);
     return clients[index];
   }
 }

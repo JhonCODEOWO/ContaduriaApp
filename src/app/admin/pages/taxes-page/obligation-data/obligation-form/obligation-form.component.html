@@ -1,0 +1,5 @@
+<form [formGroup]="obligationForm" (ngSubmit)="onSubmit()">
+    <app-input-field lblText="Nombre de la obligación" type="text" [formGroup]="obligationForm" id="name"/>
+    <app-textarea-input lblText="Describe la obligación" type="text" [formGroup]="obligationForm" id="description"/>
+    <button class="btn btn-success" type="submit">Guardar</button>
+</form>

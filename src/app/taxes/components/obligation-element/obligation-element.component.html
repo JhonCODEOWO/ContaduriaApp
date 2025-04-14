@@ -4,4 +4,5 @@
         <h5>{{obligation().createdAt | date}}</h5>
     </div>
     <p>{{obligation().description}}</p>
+    <a [routerLink]="['/admin/taxes/obligation', obligation().id]">Editar</a>
 </div>

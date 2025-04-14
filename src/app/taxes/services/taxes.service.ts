@@ -11,6 +11,12 @@ const newRegime: TaxRegime = {
   name: '',
 }
 
+const newObligation: TaxObligation = {
+  id: 'new',
+  description: '',
+  name: '',
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,7 +44,24 @@ export class TaxesService {
 
   getRegime(id: string): Observable<TaxRegime>{
     if(id === 'new') return of(newRegime);
-    return this.http.get<TaxRegime>(`${this.route}/${id}`);
+    return this.http.get<TaxRegime>(`${this.route}/regime/${id}`);
   }
 
+  getObligation(id: string): Observable<TaxObligation> {
+    if(id === 'new') return of(newObligation);
+    return this.http.get<TaxObligation>(`${this.route}/obligation/${id}`);
+  }
+
+  //Crea un nuevo regime, revisar documentación de backend para enviar en partial las partes necesarias.
+  createRegime(regimeToCreate: Partial<TaxRegime>): Observable<TaxRegime> {
+    return this.http.post<TaxRegime>(`${this.route}/regime`, regimeToCreate);
+  }
+
+  createObligation(obligationToCreate: Partial<TaxObligation>): Observable<TaxObligation>{
+    return this.http.post<TaxObligation>(`${this.route}/obligation`, obligationToCreate);
+  }
+
+  updateObligation(id: string, dataToUpdate: Partial<TaxObligation>): Observable<TaxObligation> {
+    return this.http.patch<TaxObligation>(`${this.route}/obligation/${id}`, dataToUpdate);
+  }
 }

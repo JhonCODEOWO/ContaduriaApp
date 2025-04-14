@@ -1,4 +1,5 @@
 <div>
     <h3>{{tax().name}}</h3>
     <p>{{tax().createdAt | date}}</p>
+    <a [routerLink]="['/admin/taxes/regime', tax().id]">Editar</a>
 </div>

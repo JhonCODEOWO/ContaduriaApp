@@ -1,1 +1,3 @@
-<p>obligation-data works!</p>,
+@if (obligation()) {
+    <obligation-form [obligation]="obligation()!"/>
+}
