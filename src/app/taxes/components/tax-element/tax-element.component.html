@@ -1,5 +1,10 @@
-<div>
-    <h3>{{tax().name}}</h3>
-    <p>{{tax().createdAt | date}}</p>
-    <a [routerLink]="['/admin/taxes/regime', tax().id]">Editar</a>
+<div class="card card-dash bg-base-100 w-96 cursor-pointer shadow-sm" [routerLink]="['/admin/taxes/regime', tax().id]">
+    <div class="card-body">
+        <h2 class="card-title">{{tax().name}}</h2>
+        <h2>{{tax().createdAt | date }}</h2>
+        <p>{{tax().description}}</p>
+        <!-- <div class="card-actions justify-end">
+            <button class="btn btn-primary">Buy Now</button>
+        </div> -->
+    </div>
 </div>

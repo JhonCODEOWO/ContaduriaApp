@@ -1,0 +1,27 @@
+<div class="indicator">
+    <span class="indicator-item badge badge-secondary">{{obligations().length}}</span>
+    <button class="btn" onclick="my_modal_5.showModal()">Asignar obligaciones...</button>
+</div>
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+        <h3 class="text-lg font-bold">Asignar obligaciones...</h3>
+        <p class="py-4">Selecciona el régimen en donde deseas asignar las obligaciones</p>
+        <div class="modal-action">
+            <form method="dialog" class="w-full" [formGroup]="regimeForm" (ngSubmit)="onSubmit()">
+                <!-- if there is a button in form, it will close the modal -->
+                <div>
+                    <select class="select w-full" formControlName="regimeId">
+                        <option disabled selected>Selecciona uno...</option>
+                        @for (regime of regimes(); track regime.id) {
+                            <option [value]="regime.id">{{regime.name}}</option>
+                        }
+                    </select>
+                </div>
+                <div class="mt-3 flex justify-between">
+                    <button class="btn">Close</button>
+                    <button class="btn btn-success">Aceptar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</dialog>

@@ -6,17 +6,27 @@
         <div>
             <app-title title="Regímenes Fiscales"/>
             <crud-create-btn link="regime/new"/>
-            @for (regime of taxesRegimes(); track regime.id) {
-                <tax-element [tax]="regime"/>
-            }
+            <div class="flex flex-col gap-y-3 mt-3 max-h-[50vh] overflow-y-auto">
+                @for (regime of taxesRegimes(); track regime.id) {
+                    <tax-element [tax]="regime"/>
+                }
+            </div>
         </div>
 
         <div>
             <app-title title="Obligaciones fiscales"/>
-            <crud-create-btn link="obligation/new"/>
-            @for (obligation of taxesObligations(); track obligation.id) {
-                <obligation-element [obligation]="obligation"/>
-            }
+            <div class="flex justify-between">
+                <crud-create-btn link="obligation/new"/>
+                @if (obligationsToRelate().length > 0) {
+                    <!-- Renderizar modal para relacionar -->
+                    <obligation-tax-modal [obligations]="obligationsToRelate()" (onAssigned)="relationeIsDone($event)"/>
+                }
+            </div>
+            <div class="flex flex-col gap-y-3 mt-3">
+                @for (obligation of taxesObligations(); track obligation.id) {
+                    <obligation-element (onNotChecked)="rejectedObligation($event)" (onChecked)="checkedObligation($event)" [obligation]="obligation" [resetChecked]="resetCheck()"/>
+                }
+            </div>
         </div>
     }
 </div>

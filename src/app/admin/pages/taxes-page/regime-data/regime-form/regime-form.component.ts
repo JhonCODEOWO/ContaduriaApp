@@ -41,7 +41,12 @@ export class RegimeFormComponent implements OnInit{
       this.taxesService.createRegime(regime).subscribe(data => {
         console.log('Creado');
       });
-      return;
+    }else{
+      this.taxesService.updateRegime(this.regime().id, regime).subscribe(regime => {
+        console.log('Actualizado');
+      })
     }
+
+    return;
   }
 }

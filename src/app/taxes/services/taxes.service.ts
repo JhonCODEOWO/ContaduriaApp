@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { TaxRegime } from '../interfaces/tax-regime.interface';
 import { environment } from '../../../environments/environment';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, forkJoin, Observable, of } from 'rxjs';
 import { TaxObligation } from '../interfaces/tax-obligation.interface';
 
 const newRegime: TaxRegime = {
@@ -63,5 +63,28 @@ export class TaxesService {
 
   updateObligation(id: string, dataToUpdate: Partial<TaxObligation>): Observable<TaxObligation> {
     return this.http.patch<TaxObligation>(`${this.route}/obligation/${id}`, dataToUpdate);
+  }
+
+  updateRegime(id: string, regimeData: Partial<TaxRegime>): Observable<TaxRegime> {
+    return this.http.patch<TaxRegime>(`${this.route}/regime/${id}`, regimeData);
+  }
+
+  assignObligationToRegime(regimeId: string, obligationId: string): Observable<TaxRegime> {
+    return this.http.post<TaxRegime>(`${this.route}/regime/assign`, {
+      regimeId,
+      obligationId
+    });
+  }
+
+  //Método que realiza una petición masiva usando un arreglo de id con obligaciones
+  massiveAssignationObligationToRegime(regimeId: string, obligationIds: string[]): Observable<TaxRegime[] | boolean>{
+    const requests = obligationIds.map(obligationId => this.assignObligationToRegime(regimeId, obligationId));
+
+    return forkJoin(requests).pipe(
+      catchError(error => {
+        console.error(error);
+        return of(false);
+      })
+    );
   }
 }
