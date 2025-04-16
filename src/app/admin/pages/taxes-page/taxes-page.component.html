@@ -1,4 +1,4 @@
-<div class="container flex justify-between">
+<div class="container flex flex-col md:gap-x-3 md:flex-row justify-evenly">
     @if (taxesRegimes().length === 0 || taxesObligations().length === 0) {
         <p>No se obtuvieron datos para mostrar</p>
     }
@@ -6,9 +6,9 @@
         <div>
             <app-title title="Regímenes Fiscales"/>
             <crud-create-btn link="regime/new"/>
-            <div class="flex flex-col gap-y-3 mt-3 max-h-[50vh] overflow-y-auto">
+            <div class="flex flex-col items-center gap-y-3 mt-3 max-h-[50vh] overflow-y-auto">
                 @for (regime of taxesRegimes(); track regime.id) {
-                    <tax-element [tax]="regime"/>
+                    <tax-element [tax]="regime" (onDeleteObligation)="deleteObligationInRegime($event)"/>
                 }
             </div>
         </div>
@@ -22,7 +22,7 @@
                     <obligation-tax-modal [obligations]="obligationsToRelate()" (onAssigned)="relationeIsDone($event)"/>
                 }
             </div>
-            <div class="flex flex-col gap-y-3 mt-3">
+            <div class="flex flex-col items-center gap-y-3 mt-3">
                 @for (obligation of taxesObligations(); track obligation.id) {
                     <obligation-element (onNotChecked)="rejectedObligation($event)" (onChecked)="checkedObligation($event)" [obligation]="obligation" [resetChecked]="resetCheck()"/>
                 }

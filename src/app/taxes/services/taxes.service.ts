@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { TaxRegime } from '../interfaces/tax-regime.interface';
 import { environment } from '../../../environments/environment';
-import { catchError, forkJoin, Observable, of } from 'rxjs';
+import { catchError, forkJoin, Observable, of, tap } from 'rxjs';
 import { TaxObligation } from '../interfaces/tax-obligation.interface';
 
 const newRegime: TaxRegime = {
@@ -86,5 +86,9 @@ export class TaxesService {
         return of(false);
       })
     );
+  }
+
+  unlinkObligationInRegime(regimeId: string, obligationId: string): Observable<TaxRegime>{
+    return this.http.delete<TaxRegime>(`${this.route}/regime/unlink/${regimeId}/${obligationId}`);
   }
 }

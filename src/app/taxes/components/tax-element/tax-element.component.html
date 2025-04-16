@@ -1,8 +1,38 @@
-<div class="card card-dash bg-base-100 w-96 cursor-pointer shadow-sm" [routerLink]="['/admin/taxes/regime', tax().id]">
+<div class="card card-border bg-base-100 w-96 shadow-xl">
     <div class="card-body">
-        <h2 class="card-title">{{tax().name}}</h2>
-        <h2>{{tax().createdAt | date }}</h2>
-        <p>{{tax().description}}</p>
+        <div>
+            <div class="flex items-center gap-x-2 hover:underline cursor-pointer" [routerLink]="['/admin/taxes/regime', tax().id]">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="currentColor" d="M9 13h6q.425 0 .713-.288T16 12t-.288-.712T15 11H9q-.425 0-.712.288T8 12t.288.713T9 13m0 3h6q.425 0 .713-.288T16 15t-.288-.712T15 14H9q-.425 0-.712.288T8 15t.288.713T9 16m0 3h3q.425 0 .713-.288T13 18t-.288-.712T12 17H9q-.425 0-.712.288T8 18t.288.713T9 19m-3 3q-.825 0-1.412-.587T4 20V4q0-.825.588-1.412T6 2h7.175q.4 0 .763.15t.637.425l4.85 4.85q.275.275.425.638t.15.762V20q0 .825-.587 1.413T18 22zm7-14q0 .425.288.713T14 9h4l-5-5z"/></svg>
+                </div>
+                <h2 class="card-title">
+                    {{tax().name}}
+                </h2>
+            </div>
+            <h2>{{tax().createdAt | date }}</h2>
+        </div>
+        <div class="flex flex-col gap-y-2">
+            <p>{{tax().description}}</p>
+            <ul class="list rounded-box shadow-sm p-3">
+                <li class="pb-2 text-sm opacity-60 tracking-wide uppercase">Obligaciones asignadas</li>
+                @for (obligation of tax().taxObligations; track obligation.id; let index = $index) {
+                    <li class="mt-1 list-row">
+                        <p class="font-thin opacity-30 tabular-nums">{{index + 1}}</p>
+                            <p class="text-center grow">{{obligation.name}}</p>
+                            <button class="btn btn-secondary tooltip tooltip-left" data-tip="Quitar obligación" (click)="onUnlinkObligation(obligation, tax())">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg>
+                            </button>
+                        <!-- <div class="flex justify-between items-center gap-x-2 text-xs">
+                            <p class="font-thin opacity-30 tabular-nums">{{index + 1}}</p>
+                            <p class="text-center grow">{{obligation.name}}</p>
+                            <button class="btn btn-secondary tooltip tooltip-left" data-tip="Quitar obligación" (click)="onUnlinkObligation(obligation, tax())">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg>
+                            </button>
+                        </div> -->
+                    </li>
+                }
+            </ul>
+        </div>
         <!-- <div class="card-actions justify-end">
             <button class="btn btn-primary">Buy Now</button>
         </div> -->
