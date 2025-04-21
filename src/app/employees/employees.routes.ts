@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { EmployeesLayoutComponent } from './layouts/employees-layout/employees-layout.component';
 import { NotFoundComponent } from '../common/components/not-found/not-found.component';
 import { ActivitiesPageComponent } from './pages/activities-page/activities-page.component';
+import { WorkClientsPageComponent } from './pages/work-clients-page/work-clients-page.component';
 
 export const employeeRoutes: Routes = [
     {
@@ -14,7 +15,7 @@ export const employeeRoutes: Routes = [
             },
             {
                 path: 'clients',
-                component: ActivitiesPageComponent
+                component: WorkClientsPageComponent
             }
         ],
     },

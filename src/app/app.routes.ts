@@ -4,6 +4,7 @@ import { NotFoundComponent } from './common/components/not-found/not-found.compo
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { VerifyAuthGuard } from './auth/guards/verify-auth.guard';
 import { isAuthenticatedGuard } from './auth/guards/isAuthenticated.guard';
+import { isAdminGuard } from './auth/guards/isAdmin.guard';
 
 export const routes: Routes = [
     {
@@ -17,7 +18,8 @@ export const routes: Routes = [
         path: 'admin',
         loadChildren: () => import('./admin/admin.routes'),
         canMatch: [
-            VerifyAuthGuard
+            VerifyAuthGuard,
+            isAdminGuard
         ]
     },
     {

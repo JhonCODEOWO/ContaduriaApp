@@ -24,6 +24,7 @@ export class AuthService {
 
   user = computed(() => this._user());
   token = computed(() => this._token());
+  isAdmin = computed(() => this._user()?.roles.includes('admin') ?? false)
 
   //Ejecutar chequeo de status para recrear una sesión o bien dirigir usuario a renovarla
   checkStatusResource = rxResource({
@@ -41,7 +42,6 @@ export class AuthService {
   }
 
   checkStatus(): Observable<boolean>{
-    console.log('CheckStatus token: ' + this.getFromLocalStorage());
     if(!this.getFromLocalStorage()) {
       this.logout();
       return of(false);
@@ -56,7 +56,6 @@ export class AuthService {
   }
 
   private handleAuthSuccess({user, token}: AuthResponse){
-    console.log(user);
     this._user.set(user);
     this._token.set(token);
     this._authStatus.set('authenticated');

@@ -7,6 +7,7 @@ import { User } from '../../../users/interfaces/user.interface';
 import { UsersService } from '../../../users/services/user.service';
 import { UserResponse } from '../../../users/interfaces/user-response.interface';
 import { PhoneNumberPipe } from '../../../common/pipes/phone-number.pipe';
+import { AuthService } from '../../../auth/services/auth.service';
 
 export interface UsersAndClient {
   users: User[];
@@ -19,6 +20,7 @@ export interface UsersAndClient {
   templateUrl: './client-table.component.html',
 })
 export class ClientTableComponent {
+  isAdmin = inject(AuthService).isAdmin();
   clients = input.required<Client[]>();
 
   clientService = inject(ClientsService);
