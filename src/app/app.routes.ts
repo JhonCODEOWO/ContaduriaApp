@@ -23,6 +23,10 @@ export const routes: Routes = [
         ]
     },
     {
+        path: 'clients',
+        loadChildren: () => import('./clients/clients.routes')
+    },
+    {
         path: 'auth',
         loadChildren: () => import('./auth/auth.routes'),
         canMatch: [

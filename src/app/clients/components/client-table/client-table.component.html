@@ -22,7 +22,7 @@
             <th>{{index+1}}</th>
             <td>
               <div>
-                <h4 class="font-bold">{{client.fullName}}</h4>
+                <h4 class="font-bold"><a [routerLink]="['/clients', client.id]">{{client.fullName}}</a></h4>
                 <h5 class="font-light">{{client.rfc}}</h5>
               </div>
             </td>

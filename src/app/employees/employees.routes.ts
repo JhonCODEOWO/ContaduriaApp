@@ -3,6 +3,7 @@ import { EmployeesLayoutComponent } from './layouts/employees-layout/employees-l
 import { NotFoundComponent } from '../common/components/not-found/not-found.component';
 import { ActivitiesPageComponent } from './pages/activities-page/activities-page.component';
 import { WorkClientsPageComponent } from './pages/work-clients-page/work-clients-page.component';
+import { ViewClientPageComponent } from '../clients/pages/view-client-page/view-client-page.component';
 
 export const employeeRoutes: Routes = [
     {
@@ -16,6 +17,10 @@ export const employeeRoutes: Routes = [
             {
                 path: 'clients',
                 component: WorkClientsPageComponent
+            },
+            {
+                path: 'clients/:id',
+                component: ViewClientPageComponent
             }
         ],
     },
