@@ -1,8 +1,7 @@
 @if (user() != null) {
     <app-title [title]="title()"/>
     <div>
-        <admin-user-data [user]="user()!"/>
-        
+        <admin-user-data [user]="user()!" (rolesActual)="handleRolesActual($event)" (roleDeleted)="handleRemoveRole($event)"/>
     </div>
 }
 @else if(!user()) {

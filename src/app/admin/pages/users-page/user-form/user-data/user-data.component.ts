@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../../../../../users/services/user.service';
 import { FormUtils } from '../../../../../utils/form-utils';
@@ -6,17 +6,28 @@ import { User } from '../../../../../users/interfaces/user.interface';
 import { AlertErrorComponent } from '../../../../../common/components/alert-error/alert-error.component';
 import { InputFieldComponent } from '../../../../../common/components/input-field/input-field.component';
 import { UniqueEmailOnUser } from '../../../../../utils/user-utils';
+import { RolesService } from '../../../../../roles/roles.service';
+import { Role } from '../../../../../roles/interfaces/role.interface';
+import { UserRolesComponent } from '../user-roles/user-roles.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'admin-user-data',
-  imports: [AlertErrorComponent, ReactiveFormsModule, InputFieldComponent],
+  imports: [AlertErrorComponent, ReactiveFormsModule, InputFieldComponent, UserRolesComponent],
   templateUrl: './user-data.component.html',
 })
 export class UserDataComponent implements OnInit{
   fb = inject(FormBuilder);
-  formUtils = FormUtils;
+  rolesService = inject(RolesService);
   userService = inject(UsersService);
   uniqueEmailOnUser = inject(UniqueEmailOnUser);
+
+  formUtils = FormUtils;
+  roles = signal<Role[] | null>(null); //Signal que almacenará los roles provenientes de la base de datos.
+  rolesSelected = signal<Role[]>([]); //Signal que mantendrá los roles para poder enviarlos a la petición del API.
+
+  rolesActual = output<Role[]>(); //Output para dar a conocer roles
+  roleDeleted = output<Role>(); //Output para dar a conocer role eliminado
 
   user = input.required<User>();
 
@@ -62,10 +73,11 @@ export class UserDataComponent implements OnInit{
   );
 
   ngOnInit(): void {
+      this.rolesService.getRoles().subscribe(roles => this.roles.set(roles))
       this.setFormValue(this.user());
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.userForm.markAllAsTouched();
     if (this.userForm.invalid) return;
 
@@ -75,21 +87,33 @@ export class UserDataComponent implements OnInit{
     const user: Partial<User> = {
       ...(data as any),
     };
+    const roles = this.rolesSelected().map(role => role.id);
 
     if (this.user().id === 'new') {
       //Crear
-      this.userService.createUser(user).subscribe((data) => {
-        console.log(data);
-      });
+      const userCreated = await firstValueFrom(this.userService.createUser(user));
+
+      this.rolesService.assignToUser({idUser: userCreated.id, roles}).subscribe(user => console.log(user));
     }else{
       //TODO: Editar
       this.userService.updateUser(this.user().id, user).subscribe(data => {
-        console.log(data);
+        this.rolesService.assignToUser({idUser: data.id, roles}).subscribe(user => console.log(user));
       });
     }
   }
 
   setFormValue(formLike: Partial<User>) {
     this.userForm.reset(formLike);
+  }
+
+  //Recibe los datos emitidos por user-roles y los aplica a sus datos para enviarlos a las peticiones correspondientes
+  handleRolesClicked(roles: Role[]){
+    this.rolesActual.emit(roles); //Emite los roles para que los componentes padres puedan utilizarlos
+    this.rolesSelected.set(roles); //Coloca los datos actuales en cada evento.
+  }
+
+  //Trata el evento clickDeleteRol y realiza la petición pertinente, si esta es true emite el role eliminado para componentes padre
+  handleRoleToDelete(role: Role){
+    this.rolesService.removeRoleFromUser(this.user().id, role.id).subscribe(success => (success)? this.roleDeleted.emit(role): '');
   }
 }
