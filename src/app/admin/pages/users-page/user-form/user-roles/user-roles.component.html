@@ -2,7 +2,7 @@
     <app-title [title]="title()" />
     <ul class="list rounded grid grid-cols-3 p-4 gap-1">
         @for (role of roles(); track role.id) {
-        <li class="cursor-pointer bg-base-200 rounded p-5 flex flex-col" #roleElement>
+        <li class="bg-base-200 rounded p-5 flex flex-col" #roleElement>
             <div class="uppercase font-black">
                 <p>
                     {{role.name}}
@@ -11,6 +11,11 @@
                     }
                 </p>
                 <p class="font-normal">{{role.description}}</p>
+                <p class="flex w-full gap-x-3">
+                    @for (permission of role.permissions; track permission.id) {
+                        <span>{{permission.name}}</span>
+                    }
+                </p>
             </div>
             <!-- Esta renderización depende enteramente de tener un usuario, si no lo hay no funcionarán -->
             @if (user()) {

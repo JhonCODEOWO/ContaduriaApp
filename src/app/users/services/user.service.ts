@@ -58,7 +58,7 @@ export class UsersService {
     return this.httpClient.patch<boolean>(`${environment.API_URL}/auth/enable/${id}`, {});
   }
 
-  verifyEmail(email: string): Observable<boolean>{
-    return this.httpClient.get<boolean>(`${environment.API_URL}/auth/verifyAvailableEmail/${email}`);
+  verifyEmail(email: string, idUser: string = ''): Observable<boolean>{
+    return this.httpClient.get<boolean>(`${environment.API_URL}/auth/verifyAvailableEmail/${email}`, {params: {idUser}});
   }
 }

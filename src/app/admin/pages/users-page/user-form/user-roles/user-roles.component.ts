@@ -36,7 +36,6 @@ export class UserRolesComponent {
       element.classList.add(ClassesNames.ClickedElement);
       this.rolesClicked().push(role);
     } else {
-      this.roleToDelete.emit(role);
       element.classList.remove(ClassesNames.ClickedElement);
       const index = this.rolesClicked().findIndex(clickedRole => clickedRole.id === role.id);
       this.rolesClicked().splice(index, 1);

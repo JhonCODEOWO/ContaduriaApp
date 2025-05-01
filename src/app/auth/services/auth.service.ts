@@ -86,7 +86,6 @@ export class AuthService {
   //Retorna el token almacenado en localStorage si existe
   getFromLocalStorage(): string | null{
     const tokenFromLocal = localStorage.getItem('token');
-    console.log('GetFromLocalStorage: ' + tokenFromLocal);
     if(!tokenFromLocal) return null;
 
     return tokenFromLocal;

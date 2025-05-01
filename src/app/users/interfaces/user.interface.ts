@@ -10,4 +10,6 @@ export interface User {
     roles: Role[];
     createdAt:    Date;
     updatedAt:    Date;
+     /** Contraseña del usuario (opcional, solo se utiliza en peticiones de cliente  a servidor) */
+    password?: string;
 }

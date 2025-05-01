@@ -10,6 +10,7 @@ import { RolesService } from '../../../../../roles/roles.service';
 import { Role } from '../../../../../roles/interfaces/role.interface';
 import { UserRolesComponent } from '../user-roles/user-roles.component';
 import { firstValueFrom } from 'rxjs';
+import { uniqueEmailValidator } from '../../../../../users/validators/validate-email-update';
 
 @Component({
   selector: 'admin-user-data',
@@ -52,7 +53,7 @@ export class UserDataComponent implements OnInit{
       email: [
         '',
         [Validators.required, Validators.pattern(FormUtils.emailPattern)],
-        [this.uniqueEmailOnUser.validate.bind(this.uniqueEmailOnUser)]
+        []
       ],
       phone_number: [
         '',
@@ -69,12 +70,21 @@ export class UserDataComponent implements OnInit{
       validators: [
         FormUtils.isFieldOneEqualFieldTwo('password', 'passwordVerify'),
       ],
+      updateOn: 'blur'
     }
   );
 
   ngOnInit(): void {
       this.rolesService.getRoles().subscribe(roles => this.roles.set(roles))
       this.setFormValue(this.user());
+      //Añadir o eliminar validadores en base al tipo de operación
+      if(this.user().id != 'new') {
+        this.userForm.get('password')?.removeValidators([Validators.required]);
+        this.userForm.get('passwordVerify')?.removeValidators([Validators.required]);
+        this.userForm.get('email')?.addAsyncValidators([uniqueEmailValidator(this.userService, this.user().id)]);
+      } else {
+        this.userForm.get('email')?.addAsyncValidators([uniqueEmailValidator(this.userService, '')]);
+      }
   }
 
   async onSubmit() {
@@ -95,7 +105,8 @@ export class UserDataComponent implements OnInit{
 
       this.rolesService.assignToUser({idUser: userCreated.id, roles}).subscribe(user => console.log(user));
     }else{
-      //TODO: Editar
+      //TODO: Eliminar propiedades que son opcionales
+      if(!user.password) delete user.password;
       this.userService.updateUser(this.user().id, user).subscribe(data => {
         this.rolesService.assignToUser({idUser: data.id, roles}).subscribe(user => console.log(user));
       });
@@ -114,6 +125,7 @@ export class UserDataComponent implements OnInit{
 
   //Trata el evento clickDeleteRol y realiza la petición pertinente, si esta es true emite el role eliminado para componentes padre
   handleRoleToDelete(role: Role){
+    console.log('DeleteRole');
     this.rolesService.removeRoleFromUser(this.user().id, role.id).subscribe(success => (success)? this.roleDeleted.emit(role): '');
   }
 }
