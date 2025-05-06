@@ -3,30 +3,39 @@
     <ul class="list rounded grid grid-cols-3 p-4 gap-1">
         @for (role of roles(); track role.id) {
         <li class="bg-base-200 rounded p-5 flex flex-col" #roleElement>
-            <div class="uppercase font-black">
-                <p>
-                    {{role.name}}
-                    @if (rolesInUser()?.includes(role.id)) {
-                    <span class="text-sm font-extralight">Asignado actualmente</span>
-                    }
-                </p>
-                <p class="font-normal">{{role.description}}</p>
-                <p class="flex w-full gap-x-3">
+            <div class="uppercase font-black flex flex-col flex-grow gap-y-2">
+                <div>
+                    <p class="text-3xl">
+                        {{role.name}}
+                        @if (rolesInUser()?.includes(role.id)) {
+                        <span class="text-sm font-extralight">Asignado actualmente</span>
+                        }
+                    </p>
+                    <p class="font-normal">{{role.description}}</p>
+                </div>
+                <p class="flex w-full gap-x-3 mt-auto">
                     @for (permission of role.permissions; track permission.id) {
                         <span>{{permission.name}}</span>
+                    } @empty {
+                        <p>No hay permisos asignados actualmente</p>
                     }
                 </p>
             </div>
-            <!-- Esta renderización depende enteramente de tener un usuario, si no lo hay no funcionarán -->
-            @if (user()) {
-                <div class="flex justify-between items-center mt-auto">
-                    @if (!rolesInUser()?.includes(role.id) || user()?.id == 'new') {
-                        <button class="btn btn-success" (click)="onRoleClicked(role, roleElement)">Añadir rol</button>
-                    } @else if(user()?.id != 'new') {
-                        <button class="btn btn-error" (click)="onDeleteRoleClicked(role)">Quitar este rol</button>
-                    }
-                </div>
-            }
+            <div class="mt-3">
+                @if (editing()) {
+                    <button class="btn btn-info" (click)="onPermissionAssignClick(role)">Seleccionar rol...</button>
+                }
+                <!-- Esta renderización depende enteramente de tener un usuario, si no lo hay no funcionarán -->
+                @if (user()) {
+                    <div class="flex justify-between items-center mt-auto">
+                        @if (!rolesInUser()?.includes(role.id) || user()?.id == 'new') {
+                            <button class="btn btn-success" (click)="onRoleClicked(role, roleElement)">Añadir rol</button>
+                        } @else if(user()?.id != 'new') {
+                            <button class="btn btn-error" (click)="onDeleteRoleClicked(role)">Quitar este rol</button>
+                        }
+                    </div>
+                }
+            </div>
         </li>
         }
     </ul>

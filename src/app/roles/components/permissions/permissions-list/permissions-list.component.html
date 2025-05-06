@@ -1,0 +1,17 @@
+<h2 class="text-2xl font-bold">{{titleComputed()}}</h2>
+<app-collapse tittle="¿Que impacto tienen los permisos?" details="Cuando asignas un permiso a un rol, todos los usuarios que tengan ese rol van a poder ejecutar operaciones
+referentes al permiso. Asigna permisos de manera cuidadosa para evitar usuarios interactuando con elementos
+delicados" />
+<ul class="flex flex-col gap-y-3 list mt-3">
+    @for (permission of permissions(); track permission.id) {
+    <li class="bg-base-200 p-3 rounded flex items-center gap-x-4">
+        @if (role()) {
+            <input class="checkbox checkbox-success" type="checkbox" #chkButton [checked]="permissionsInRole()?.includes(permission.id)" #chkPermission (click)="onCheckClick(chkPermission, permission.id, $event)">
+        }
+        <div>
+            <p class="text-xl font-bold uppercase">{{permission.name}}</p>
+            <p>{{permission.description}}</p>
+        </div>
+    </li>
+    }
+</ul>

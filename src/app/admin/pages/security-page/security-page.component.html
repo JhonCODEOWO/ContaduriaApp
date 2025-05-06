@@ -1,0 +1,16 @@
+<app-title title="Gestión de seguridad"/>
+<div role="alert" class="alert alert-error alert-soft">
+    <span class="text-3xl font-black">¡Cuidado!</span>
+    <span>Los cambios que lleves a cabo en este apartado pueden resultar en problemas inesperados para los usuarios del sistema incluyéndote a tí. Asegúrate de realizar movimientos en momentos donde tus usuarios no estén utilizando el sistema.</span>
+</div>
+@if (roles() && permissions()) {
+    <section class="grid grid-cols-2">
+        <user-roles [editing]="true" title="Listado de roles" [roles]="roles() ?? []" (roleSelected)="handleRoleSelected($event)"/>
+        <permissions-list [permissions]="permissions() ?? []" tittle="Permisos" [role]="actualRole()" (roleAffected)="handleRoleAffected($event)"/>
+    </section>
+    @if (actualRole()) {
+        <button class="btn btn-error" (click)="onDeselect()">Des-seleccionar</button>
+    }
+} @else {
+    <app-loader/>
+}

@@ -10,6 +10,7 @@ import { ClientDetailsComponent } from './pages/clients-page/client-details/clie
 import { ClientsAssignedToUserComponent } from './pages/users-page/clients-assigned-to-user/clients-assigned-to-user.component';
 import { RegimeDataComponent } from './pages/taxes-page/regime-data/regime-data.component';
 import { ObligationDataComponent } from './pages/taxes-page/obligation-data/obligation-data.component';
+import { SecurityPageComponent } from './pages/security-page/security-page.component';
 
 export const adminRoutes: Routes = [
     {
@@ -55,6 +56,11 @@ export const adminRoutes: Routes = [
             {
                 path: 'taxes/obligation/:id',
                 component: ObligationDataComponent
+            },
+            {
+                path: 'security',
+                component: SecurityPageComponent,
+                title: 'Seguridad',
             }
         ]
     },
