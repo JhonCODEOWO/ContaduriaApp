@@ -11,6 +11,9 @@ import { ClientsAssignedToUserComponent } from './pages/users-page/clients-assig
 import { RegimeDataComponent } from './pages/taxes-page/regime-data/regime-data.component';
 import { ObligationDataComponent } from './pages/taxes-page/obligation-data/obligation-data.component';
 import { SecurityPageComponent } from './pages/security-page/security-page.component';
+import { ActivitiesPageComponent } from '../employees/pages/activities-page/activities-page.component';
+import { ActivitiesAdminPageComponent } from './pages/activities-admin-page/activities-admin-page.component';
+import { ActivityFormComponent } from './pages/activities-admin-page/activity-form/activity-form.component';
 
 export const adminRoutes: Routes = [
     {
@@ -61,6 +64,16 @@ export const adminRoutes: Routes = [
                 path: 'security',
                 component: SecurityPageComponent,
                 title: 'Seguridad',
+            },
+            {
+                path: 'activities',
+                component: ActivitiesAdminPageComponent,
+                title: 'Gestión de actividades'
+            },
+            {
+                path: 'activities/:id',
+                component: ActivityFormComponent,
+                title: 'Actividad'
             }
         ]
     },

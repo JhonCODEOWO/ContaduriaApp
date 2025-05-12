@@ -1,0 +1,5 @@
+<app-title title="Administración de actividades"/>
+<crud-create-btn link="new"/>
+@if (responseActivity()) {
+    <list-activities [activities]="responseActivity()?.data ?? []"/>
+}

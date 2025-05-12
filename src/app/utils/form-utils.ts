@@ -60,6 +60,12 @@ export class FormUtils {
          case 'maxlength':
           return `La longitud no debe exceder los ${errors['maxlength'].requiredLength} caracteres`;
 
+        case 'isNotValidUUID':
+          return 'El elemento seleccionado es inválido';
+
+        case 'isValidDate':
+          return 'No puedes colocar una fecha menor a la actual.';
+
         default:
           console.log(errors);
           return `Error sin formato en FormUtils: ${key}`

@@ -1,0 +1,8 @@
+<fieldset class="fieldset" [formGroup]="fg()">
+    <legend class="fieldset-legend">{{lblText()}}</legend>
+    @if (formUtils.isValidField(id(), fg())) {
+        <p class="text-error">{{formUtils.getFieldError(id(), fg())}}</p>
+    }
+    <input type="datetime-local" class="input w-full" formControlName="{{id()}}"
+        [class.input-error]="formUtils.isValidField(id(), fg())" [class.select-success]="!formUtils.isValidField(id(), fg())">
+</fieldset>

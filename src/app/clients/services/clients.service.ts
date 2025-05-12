@@ -44,6 +44,7 @@ export class ClientsService {
   
   getClients(): Observable<Client[]>{
     return this.http.get<Client[]>(`${this.route}`).pipe(
+      delay(1500),
       catchError((response) => {
         if(response.error.statusCode == 401) {
           this.router.navigate(['login']);
