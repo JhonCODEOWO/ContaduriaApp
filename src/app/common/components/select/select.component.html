@@ -1,8 +1,7 @@
 <fieldset class="fieldset" [formGroup]="fb()">
-    <legend class="fieldset-legend">{{lblText()}}</legend>
+    <legend class="fieldset-legend text-lg">{{lblText()}}</legend>
     <select class="select w-full" [id]="id()" [formControlName]="id()" [class.select-error]="formUtils.isValidField(id(), fb())" [class.select-success]="!formUtils.isValidField(id(), fb())">
         <option value="" disabled>Selecciona alguno</option>
-        <option value="2">NO ES UUID</option>
         @for (value of values(); track value.id) {
         <option [value]="value.id">{{value.optionText}}</option>
         }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, delay, Observable, of } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { environment } from '../../../environments/environment';
 import { UserResponse } from '../interfaces/user-response.interface';
@@ -27,6 +27,7 @@ export class UsersService {
 
   getUsers(): Observable<UserResponse | null>{
     return this.httpClient.get<UserResponse>(`${environment.API_URL}${route}`).pipe(
+      delay(2000),
       catchError(() => {
         return of(null);
       })

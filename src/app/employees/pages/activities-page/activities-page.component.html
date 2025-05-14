@@ -1,1 +1,5 @@
 <app-title title="Administrar actividades"/>
+<app-collapse tittle="¿Cómo funcionan las actividades?" details="Cada actividad tiene una fecha de vencimiento, deberás realizarla antes de que finalice, de no hacerlo cada actividad se cancela automáticamente y no hay manera de deshacer los cambios, igualmente será inaccesible una vez haya finalizado."/>
+@if (activities()) {
+    <list-activities [activities]="activities()?.data!"/>
+}

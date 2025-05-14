@@ -11,6 +11,10 @@ export class ActivitiesService {
   route = `${environment.API_URL}/activities`;
   httpClient = inject(HttpClient);
 
+  get(id: string): Observable<Activity>{
+    return this.httpClient.get<Activity>(`${this.route}/${id}`);
+  }
+
   getActivities(idUser?: string, limit: number = 5, offset = 0): Observable<ActivityResponse> {
     let httpParams = new HttpParams().set('limit', limit).set('offset', offset);
 
@@ -21,5 +25,13 @@ export class ActivitiesService {
   create(activity: Partial<Activity>): Observable<Activity>{
     const body = omitBy(activity, (value) => value === null); //Quitar campos null
     return this.httpClient.post<Activity>(this.route, body);
+  }
+
+  update(id: string, activity: Partial<Activity>): Observable<Activity>{
+    return this.httpClient.patch<Activity>(`${this.route}/${id}`, activity);
+  }
+
+  delete(id: string): Observable<boolean>{
+    return this.httpClient.delete<boolean>(`${this.route}/${id}`);
   }
 }

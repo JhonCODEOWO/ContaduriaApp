@@ -1,13 +1,15 @@
-@if (clients() && users()) {
-    <app-title title="Crear nueva actividad"/>
-    <form [formGroup]="activityForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 xl:grid-cols-2 xl:row gap-x-10 gap-y-7">
-        <app-select id="client" [values]="clients()!" lblText="Selecciona un cliente" [fb]="activityForm"/>
-        <app-select id="appliesTo" [values]="users()!" lblText="Selecciona un usuario" [fb]="activityForm" />
-        <app-date-time-local [fg]="activityForm" id="limitDate" lblText="Seleccione la fecha límite de la actividad"/>
+@if (users() && !loading()) {
+<app-title title="Crear nueva actividad" />
+<form [formGroup]="activityForm" (ngSubmit)="onSubmit()"
+    class="grid grid-cols-1 xl:grid-cols-2 xl:row gap-x-10 gap-y-7">
+    <app-select id="appliesTo" [values]="users()!" lblText="Selecciona el usuario que llevará a cabo la actividad"
+        [fb]="activityForm" (valueSelected)="handleValueSelected($event)" />
+    <app-select id="client" [values]="clients() ?? []" lblText="Selecciona el cliente" [fb]="activityForm" />
+    <app-date-time-local [fg]="activityForm" id="limitDate" lblText="Seleccione la fecha límite de la actividad" />
 
-        <app-textarea-input id="details" lblText="Detalles de la actividad" [formGroup]="activityForm" class="row-span-2"/>
-        <button type="submit" class="btn btn-info">Crear actividad...</button>
-    </form>
+    <app-textarea-input id="details" lblText="Detalles de la actividad" [formGroup]="activityForm" class="row-span-2" />
+    <button type="submit" class="btn btn-info">Crear actividad...</button>
+</form>
 } @else {
-    <app-loader textContent="Cargando datos necesarios por favor espere..."/>
+<app-loader textContent="Cargando datos necesarios por favor espere..." />
 }

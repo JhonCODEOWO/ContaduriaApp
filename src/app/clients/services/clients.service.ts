@@ -87,6 +87,7 @@ export class ClientsService {
   getClientsAssignedToUser(id: string): Observable<ClientRelatedResponse>{
     //Obtener primero el usuario por id y luego ejecutar la petición de los clientes
     return this.userService.getUser(id).pipe(
+      delay(2000),
       switchMap(user => this.http.get<ClientRelatedResponse>(`${this.route}/assigned/${user.id}`))
     );
   }

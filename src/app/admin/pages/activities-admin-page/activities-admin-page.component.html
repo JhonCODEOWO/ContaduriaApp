@@ -1,5 +1,14 @@
-<app-title title="Administración de actividades"/>
-<crud-create-btn link="new"/>
+<app-title title="Administración de actividades" />
+<crud-create-btn link="new" />
 @if (responseActivity()) {
-    <list-activities [activities]="responseActivity()?.data ?? []"/>
+<list-activities [activities]="responseActivity()?.data ?? []" (deleted)="handleDeleted($event)"
+    (error)="handleError($event)" />
+}
+
+@if (error()) {
+<div class="toast toast-end">
+    <div class="alert alert-error">
+        <span>No se ha podido llevar a cabo la operación.</span>
+    </div>
+</div>
 }
