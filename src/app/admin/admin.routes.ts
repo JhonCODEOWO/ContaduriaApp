@@ -5,15 +5,16 @@ import { HomeAdminPageComponent } from './pages/home-admin-page/home-admin-page.
 import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
 import { TaxesPageComponent } from './pages/taxes-page/taxes-page.component';
 import { UserFormComponent } from './pages/users-page/user-form/user-form.component';
-import { ClientFormComponent } from './pages/clients-page/client-form/client-form.component';
 import { ClientDetailsComponent } from './pages/clients-page/client-details/client-details.component';
 import { ClientsAssignedToUserComponent } from './pages/users-page/clients-assigned-to-user/clients-assigned-to-user.component';
 import { RegimeDataComponent } from './pages/taxes-page/regime-data/regime-data.component';
 import { ObligationDataComponent } from './pages/taxes-page/obligation-data/obligation-data.component';
 import { SecurityPageComponent } from './pages/security-page/security-page.component';
-import { ActivitiesPageComponent } from '../employees/pages/activities-page/activities-page.component';
 import { ActivitiesAdminPageComponent } from './pages/activities-admin-page/activities-admin-page.component';
 import { ActivityFormComponent } from './pages/activities-admin-page/activity-form/activity-form.component';
+import { ClientContractsComponent } from './pages/clients-page/client-contract/client-contracts.component';
+import { ContractFormComponent } from './pages/clients-page/client-contract/contract-form/contract-form.component';
+import { ManageContractClientComponent } from './pages/clients-page/client-contract/manage-contract-client/manage-contract-client.component';
 
 export const adminRoutes: Routes = [
     {
@@ -49,6 +50,14 @@ export const adminRoutes: Routes = [
                 component: ClientDetailsComponent
             },
             {
+                path: 'clients/contracts/:id',
+                component: ClientContractsComponent
+            },
+            {
+                path: 'clients/contracts/create/:idClient/:idContract',
+                component: ManageContractClientComponent
+            },
+            {
                 path: 'taxes',
                 component: TaxesPageComponent
             },
@@ -74,7 +83,7 @@ export const adminRoutes: Routes = [
                 path: 'activities/:id',
                 component: ActivityFormComponent,
                 title: 'Actividad'
-            }
+            },
         ]
     },
     {

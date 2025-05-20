@@ -4,10 +4,11 @@ import { UsersService } from '../../../users/services/user.service';
 import { UserResponse } from '../../../users/interfaces/user-response.interface';
 import { UsersListComponent } from "../../../users/components/users-list/users-list.component";
 import { CreateBtnComponent } from "../../../common/components/crud/create-btn/create-btn.component";
+import { LoaderComponent } from '../../../common/components/loader/loader.component';
 
 @Component({
   selector: 'app-users-page',
-  imports: [TitleComponent, UsersListComponent, CreateBtnComponent],
+  imports: [TitleComponent, UsersListComponent, CreateBtnComponent, LoaderComponent],
   templateUrl: './users-page.component.html',
 })
 export class UsersPageComponent {

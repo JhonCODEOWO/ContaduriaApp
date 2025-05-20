@@ -14,3 +14,11 @@
 .clickedElement {
     @apply bg-blue-300;
 }
+
+.toast-error {
+    @apply alert alert-error text-white;
+}
+
+.toast-successful{
+    @apply alert alert-success;
+}

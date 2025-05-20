@@ -4,6 +4,10 @@
             <app-title title="Control de usuarios"/>
             <crud-create-btn link="/admin/users/new"/>
         </div>
-        <users-list [users]="userResponse()?.data ?? []"/>
+        @if (userResponse()) {
+            <users-list [users]="userResponse()?.data ?? []"/>
+        } @else {
+            <app-loader/>
+        }
     </div>
 </div>

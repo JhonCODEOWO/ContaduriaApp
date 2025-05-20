@@ -1,0 +1,30 @@
+<form [formGroup]="contractForm" (ngSubmit)="onSubmit()">
+    <!-- Data of the contract -->
+    <app-select id="contractedBy" lblText="Cliente al que aplica" [fb]="contractForm" [values]="clientDataSelect()" />
+    <app-input-field type="number" id="total_amount" lblText="Ingresa el monto que se debe de pagar por renovación"
+        [formGroup]="contractForm" placeholder="200.00" />
+    <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-full border p-4">
+        <legend class="fieldset-legend">Estado inicial del contrato</legend>
+        <label class="label">
+            <input type="checkbox" checked="checked" class="toggle" formControlName="active" />
+            ¿Activar?
+        </label>
+    </fieldset>
+
+    <!-- Show and list TaxObligations available -->
+    <fieldset class="mt-2">
+        <legend>Selecciona los regímenes que abarca el contrato</legend>
+        <div class="flex flex-row gap-x-3 overflow-y-scroll w-dvh">
+            @for (obligation of taxObligations(); track obligation.id; let i = $index) {
+                <!-- Each element has events and initial state only in edit mode -->
+                <obligation-element [obligation]="obligation" (onChecked)="handleChecked($event)"
+                    (onNotChecked)="handleNotChecked($event)" [initialState]="(getObligations.value.includes(obligation.id) && actualContractID != 'new')? 'checked': 'not-checked'"/>
+            }
+        </div>
+        @if (formUtils.isValidField('taxObligations', contractForm)) {
+        <p class="text-error">{{formUtils.getFieldError('taxObligations', contractForm)}}</p>
+        }
+    </fieldset>
+
+    <button type="submit" class="btn btn-success mt-3">Guardar contrato</button>
+</form>

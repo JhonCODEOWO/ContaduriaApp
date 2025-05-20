@@ -1,2 +1,5 @@
-<app-navbar/>
-<router-outlet/>
+<app-navbar />
+<router-outlet />
+@if (toastService.hasToast) {
+<app-toast [styleToast]="this.toastService.getToast!.styleClass" [txtToast]="this.toastService.getToast!.txtToast" />
+}

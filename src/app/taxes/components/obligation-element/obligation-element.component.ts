@@ -17,6 +17,8 @@ export class ObligationElementComponent {
   checked = signal<boolean>(false);
   resetChecked = input<boolean>(false); //Input para ejecutar un efecto si este es true
 
+  initialState = input<'checked' | 'not-checked'>('not-checked');// Initial state optional for each element
+
   inputCheck = viewChild<ElementRef>('check');
 
   resetCheck = effect(() => {

@@ -24,7 +24,7 @@ export class TaxesService {
   route = `${environment.API_URL}/taxes`;
   http = inject(HttpClient);
 
-  getTaxRegimes(){
+  getTaxRegimes(): Observable<TaxRegime[]>{
     return this.http.get<TaxRegime[]>(`${this.route}/regime`).pipe(
       catchError((error) => {
         console.log(error.error.message);
