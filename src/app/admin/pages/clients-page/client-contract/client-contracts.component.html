@@ -1,35 +1,57 @@
 <div class="flex justify-between">
-    <app-title [title]="'Administrar contratos de ' + client()?.fullName" />
-    <crud-create-btn link="/admin/clients/contracts/create/{{client()?.id}}/new"/>
+    <app-title [title]="'Administrar a ' + client()?.fullName" />
 </div>
 
-<div class="grid grid-cols-3">
-    @for (contract of contracts(); track contract.id) {
-    <div class="card bg-base-100 w-96 shadow-sm">
-        <div class="card-body relative">
-            <div class="my-3 flex flex-col gap-y-3">
-                @if (contract.active) {
-                <span class="badge badge-success">Activo</span>
-                } @else {
-                <span class="badge badge-error">Inactivo</span>
-                }
-                <div>
-                    <h2 class="card-title">
-                        {{contract.total_amount | currency}}
-                    </h2>
-                    <h4>Fecha de creación del contrato: {{contract.createdAt | date}}</h4>
-                </div>
-            </div>
-            <div class="card-actions mt-auto">
-                @for (obligation of contract.taxObligations; track obligation.id) {
-                <div class="badge badge-outline">{{obligation.name}}</div>
-                }
-                <div class="flex justify-between mt-3 w-full">
-                    <a class="btn btn-info" [routerLink]="['/admin/clients/contracts/create', contract.contractedBy.id, contract.id]">Modificar</a>
-                    <button class="btn btn-error" (click)="onDeleteClick(contract.id)">Eliminar</button>
-                </div>
-            </div>
+<!-- TODO: Componente de contratos -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-2">
+    <section>
+        <div class="flex justify-between">
+            <h2 class="font-bold text-2xl">Contratos</h2>
+            <crud-create-btn link="/admin/clients/contracts/create/{{client()?.id}}/new" />
         </div>
-    </div>
-    }
+        <div class="grid grid-cols-3">
+            @for (contract of contracts(); track contract.id) {
+            <div class="card bg-base-100 w-96 shadow-sm">
+                <div class="card-body relative">
+                    <div class="my-3 flex flex-col gap-y-3">
+                        @if (contract.active) {
+                        <span class="badge badge-success">Activo</span>
+                        } @else {
+                        <span class="badge badge-error">Inactivo</span>
+                        }
+                        <div>
+                            <h2 class="card-title">
+                                {{contract.total_amount | currency}}
+                            </h2>
+                            <h4>Fecha de creación del contrato: {{contract.createdAt | date}}</h4>
+                        </div>
+                    </div>
+                    <div class="card-actions mt-auto">
+                        @for (obligation of contract.taxObligations; track obligation.id) {
+                        <div class="badge badge-outline">{{obligation.name}}</div>
+                        }
+                        <div class="flex justify-between mt-3 w-full">
+                            <a class="btn btn-info"
+                                [routerLink]="['/admin/clients/contracts/create', contract.contractedBy.id, contract.id]">Modificar</a>
+                            <button class="btn btn-error" (click)="onDeleteClick(contract.id)">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </section>
+
+    <!-- Payments -->
+    <section>
+        <div class="flex justify-between">
+            <h2 class="font-bold text-2xl">Pagos</h2>
+            <crud-create-btn link="" />
+        </div>
+        <div class="flex flex-col gap-y-3 mt-2">
+            @for (payment of payments(); track payment.id) {
+            <payment-element [payment]="payment" (downloadPDF)="handleDownloadPDF($event)"/>
+            }
+        </div>
+    </section>
 </div>

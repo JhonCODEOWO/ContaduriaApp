@@ -1,14 +1,13 @@
 @if (client()) {
-    <app-title [title]="'Detalles de ' + client()?.fullName"/> 
-    <section class="grid grid-cols-2 gap-2 m-3">
-        <div class="p-5 rounded bg-base-200">
-            <h2><span class="font-bold uppercase">Número telefónico: </span>{{client()?.phoneNumber ?? '' | PhoneNumber }} </h2>
-            <h2><span class="font-bold uppercase">RFC: </span>{{client()?.rfc}}</h2>
-            <h2><span class="font-bold uppercase">Contraseña SAT:  </span> {{client()?.sat_password}}</h2>
-            <h2>Creado desde: {{client()?.createdAt | date}}</h2>
-        </div>
-        <div>
+<app-title [title]="'Detalles de ' + client()?.fullName" />
+<section class="gap-2 rounded bg-base-200">
+    <h2><span class="font-bold uppercase">Número telefónico: </span>{{client()?.phoneNumber ?? '' | PhoneNumber }} </h2>
+    <h2><span class="font-bold uppercase">RFC: </span>{{client()?.rfc}}</h2>
+    <h2><span class="font-bold uppercase">Contraseña SAT: </span> {{client()?.sat_password}}</h2>
+    <h2>Creado desde: {{client()?.createdAt | date}}</h2>
+</section>
 
-        </div>
-    </section>
+<section class="rounded bg-base-200">
+    <h2 class="text-2xl font-bold">Historial de pagos</h2>
+</section>
 }
