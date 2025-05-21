@@ -1,9 +1,14 @@
-<section class="p-5 max-w-[50rem]" style="margin: 0 auto;">
-    <h1 class="text-4xl font-semibold text-center p-1 ">Inicia sesión.</h1>
-    <div class="divider"></div>
-    <form class="w-full flex flex-col max-w-[50rem] bg-base-200 p-5 rounded" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <app-input-field id="email" lblText="Correo electrónico:" type="email" [formGroup]="loginForm" placeholder="Ingresa el correo electrónico de tu cuenta"/>
-        <app-input-field id="password" lblText="Contraseña:" type="password" [formGroup]="loginForm" placeholder="Contraseña de la cuenta"/>
-        <button type="submit" class="btn btn-success mt-4">Iniciar sesión</button>
+<section class="p-5 max-w-[35rem] shadow-xl border border-base-200 rounded-md mx-auto my-[5rem]">
+    <h1 class="text-4xl font-semibold ">Inicia sesión.</h1>
+    <p class="text-secondary">Ingresa tus credenciales, para continuar.</p>
+    <form class="w-full flex flex-col max-w-[50rem]" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        @if (error()) {
+        <p class="text-error">El correo y contraseña no coinciden, intenta de nuevo.</p>
+        }
+        <app-input-field id="email" lblText="Correo electrónico:" type="email" [formGroup]="loginForm"
+            placeholder="Ingresa el correo electrónico de tu cuenta" />
+        <app-input-field id="password" lblText="Contraseña:" type="password" [formGroup]="loginForm"
+            placeholder="Contraseña de la cuenta" />
+        <button type="submit" class="btn btn-info mt-4">Iniciar sesión</button>
     </form>
 </section>
