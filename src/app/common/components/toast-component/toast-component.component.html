@@ -1,5 +1,5 @@
-<div class="toast toast-end">
-  <div [class]="styleToast()" #toast>
+<div class="toast toast-end" [style]="{'bottom': bottomApplied() + 'px', 'margin-bottom': defineMargin(bottomApplied()) + 'px'}" #toast>
+  <div [class]="styleToast()">
     <span>{{txtToast()}}</span>
   </div>
 </div>

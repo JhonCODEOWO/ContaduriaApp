@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, delay, Observable, of } from 'rxjs';
+import { catchError, delay, Observable, of, tap } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { environment } from '../../../environments/environment';
 import { UserResponse } from '../interfaces/user-response.interface';
+import { ToastService } from '../../common/components/toast-component/service/toast.service';
+import { StylesToast } from '../../common/components/toast-component/toast.component';
 
 const route = '/auth/users';
 
@@ -24,6 +26,7 @@ const newUser: User = {
 })
 export class UsersService {
   httpClient = inject(HttpClient);
+  toastService = inject(ToastService);
 
   getUsers(): Observable<UserResponse | null>{
     return this.httpClient.get<UserResponse>(`${environment.API_URL}${route}`).pipe(
@@ -37,7 +40,9 @@ export class UsersService {
   createUser(userToCreate: Partial<User>): Observable<User>{
     return this.httpClient.post<User>(`${environment.API_URL}/auth/create`, {
       ...userToCreate
-    });
+    }).pipe(
+      tap(user => this.toastService.saveToast({styleClass: StylesToast.SUCCESSFUL, txtToast: `Usuario ${user.lastName} creado correctamente`}))
+    );
   }
 
   getUser(id: string): Observable<User>{
@@ -48,7 +53,9 @@ export class UsersService {
   updateUser(id: string, dataUpdate: Partial<User>): Observable<User>{
     return this.httpClient.patch<User>(`${environment.API_URL}/auth/${id}`, {
       ...dataUpdate
-    });
+    }).pipe(
+      tap(user => this.toastService.saveToast({styleClass: StylesToast.SUCCESSFUL, txtToast: `Usuario ${user.lastName} actualizado correctamente`}))
+    );
   }
 
   disableUser(id: string): Observable<boolean>{

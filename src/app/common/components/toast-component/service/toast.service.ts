@@ -5,14 +5,23 @@ import { ToastData } from '../toast.component';
   providedIn: 'root'
 })
 export class ToastService {
-  private toast = signal<ToastData | null>(null);
+  private toast = signal<ToastData[] | null>(null);
 
   saveToast(data: ToastData){
-    this.toast.set(data);
+    this.toast.update(toasts => [...toasts ?? [], data]);
   }
 
-  deleteToast(){
-    this.toast.set(null);
+  deleteToast(index: number){
+    this.toast.update(toasts => {
+      if(!toasts) return null;
+
+      toasts.splice(index, 1)
+      return toasts;
+    });
+  }
+
+  deleteAllToasts(){
+    
   }
 
   get getToast(){

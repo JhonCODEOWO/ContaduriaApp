@@ -11,6 +11,8 @@ import { Role } from '../../../../../roles/interfaces/role.interface';
 import { UserRolesComponent } from '../user-roles/user-roles.component';
 import { firstValueFrom } from 'rxjs';
 import { uniqueEmailValidator } from '../../../../../users/validators/validate-email-update';
+import { ToastService } from '../../../../../common/components/toast-component/service/toast.service';
+import { StylesToast } from '../../../../../common/components/toast-component/toast.component';
 
 @Component({
   selector: 'admin-user-data',
@@ -19,6 +21,7 @@ import { uniqueEmailValidator } from '../../../../../users/validators/validate-e
 })
 export class UserDataComponent implements OnInit{
   fb = inject(FormBuilder);
+  toastService = inject(ToastService);
   rolesService = inject(RolesService);
   userService = inject(UsersService);
   uniqueEmailOnUser = inject(UniqueEmailOnUser);

@@ -1,5 +1,9 @@
 <app-navbar />
 <router-outlet />
 @if (toastService.hasToast) {
-<app-toast [styleToast]="this.toastService.getToast!.styleClass" [txtToast]="this.toastService.getToast!.txtToast" />
+<div>
+    @for (item of this.toastService.getToast; track $index) {
+    <app-toast [styleToast]="item.styleClass" [txtToast]="item.txtToast" [multiplier]="$index"/>
+    }
+</div>
 }
