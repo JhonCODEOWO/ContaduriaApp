@@ -13,17 +13,16 @@ import { CreateBtnComponent } from '../../../../common/components/crud/create-bt
 import { PaymentsService } from '../../../../payments/payments.service';
 import { Payment } from '../../../../payments/interfaces/payment.interface';
 import { PaymentElementComponent } from '../../../../payments/components/payment-element/payment-element.component';
+import { ContractElementComponent } from '../../../../contracts/components/contract-element/contract-element.component';
 
 @Component({
   selector: 'app-client-contracts',
   imports: [
     TitleComponent,
-    DatePipe,
-    CurrencyPipe,
     CreateBtnComponent,
-    RouterLink,
     PaymentElementComponent,
-  ],
+    ContractElementComponent
+],
   templateUrl: './client-contracts.component.html',
 })
 export class ClientContractsComponent implements OnInit {
@@ -53,12 +52,12 @@ export class ClientContractsComponent implements OnInit {
       .subscribe((payments) => this.payments.set(payments));
   }
 
-  onDeleteClick(idContract: string) {
-    this.contractService.delete(idContract).subscribe((deleted) =>
+  handleDeleteContract(contract: Contract) {
+    this.contractService.delete(contract.id).subscribe((deleted) =>
       this.contracts.update((data) => {
         if (!data) return data;
 
-        return data.filter((contract) => contract.id != idContract);
+        return data.filter((contract) => contract.id != contract.id);
       })
     );
   }

@@ -1,0 +1,13 @@
+<form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <app-input-field id="payment_concept" type="text" lblText="Concepto de pago" [formGroup]="paymentForm"
+        placeholder="Remuneración, Actividad extra, etc." />
+    <app-select id="method" lblText="Selecciona un método de pago" [fb]="paymentForm" [values]="payments" />
+    <app-input-field type="number" id="amount" lblText="Cantidad a pagar (Ingresa decimales si se requiere)"
+        [formGroup]="paymentForm" placeholder="Escribe una cantidad válida" />
+    <app-textarea-input id="details" lblText="Detalles del pago" [formGroup]="paymentForm"
+        placeholder="Por remuneración de impuestos, actividades extra al contrato etc." />
+    @if (!clientPreselected()) {
+    <app-select id="payedBy" [values]="clients()!" [fb]="paymentForm" lblText="Deberá ser pagado por:" />
+    }
+    <button class="btn btn-info" type="submit">Guardar pago</button>
+</form>

@@ -1,0 +1,6 @@
+
+@if (clientsData()) {
+    <payment-form [payment]="payment()" [clients]="clientsData()!" [clientPreselected]="true"/>
+} @else {
+    <app-loader />
+}

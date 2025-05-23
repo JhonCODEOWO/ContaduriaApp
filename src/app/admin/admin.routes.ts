@@ -15,6 +15,7 @@ import { ActivityFormComponent } from './pages/activities-admin-page/activity-fo
 import { ClientContractsComponent } from './pages/clients-page/client-contract/client-contracts.component';
 import { ContractFormComponent } from './pages/clients-page/client-contract/contract-form/contract-form.component';
 import { ManageContractClientComponent } from './pages/clients-page/client-contract/manage-contract-client/manage-contract-client.component';
+import { ClientPaymentResourceComponent } from './pages/clients-page/client-contract/client-payment-resource/client-payment-resource.component';
 
 export const adminRoutes: Routes = [
     {
@@ -56,6 +57,10 @@ export const adminRoutes: Routes = [
             {
                 path: 'clients/contracts/create/:idClient/:idContract',
                 component: ManageContractClientComponent
+            },
+            {
+                path: 'clients/payments/create/:idClient/:idPayment',
+                component: ClientPaymentResourceComponent
             },
             {
                 path: 'taxes',

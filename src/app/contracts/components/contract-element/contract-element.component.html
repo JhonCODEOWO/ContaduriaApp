@@ -1,0 +1,27 @@
+<div class="card bg-base-100 w-96 shadow-sm border border-base-200">
+    <div class="card-body relative">
+        <div class="my-3 flex flex-col gap-y-3">
+            @if (contract().active) {
+            <span class="badge badge-success">Activo</span>
+            } @else {
+            <span class="badge badge-error">Inactivo</span>
+            }
+            <div>
+                <h2 class="card-title">
+                    {{contract().total_amount | currency}}
+                </h2>
+                <h4>Fecha de creación del contrato: {{contract().createdAt | date}}</h4>
+            </div>
+        </div>
+        <div class="card-actions mt-auto">
+            @for (obligation of contract().taxObligations; track obligation.id) {
+            <div class="badge badge-outline">{{obligation.name}}</div>
+            }
+            <div class="flex justify-between mt-3 w-full">
+                <a class="btn btn-info"
+                    [routerLink]="['/admin/clients/contracts/create', contract().contractedBy.id, contract().id]">Modificar</a>
+                <button class="btn btn-error" (click)="onDeleteClick(contract())">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>

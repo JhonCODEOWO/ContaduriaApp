@@ -11,8 +11,12 @@ export class PaymentsService {
     httpClient = inject(HttpClient);
 
     //Create new payment
-    create(){
-        return this.httpClient.post(`${this.route}`, {});
+    create(payment: Partial<Payment>){
+        return this.httpClient.post(`${this.route}`, payment);
+    }
+
+    get(idPayment: string): Observable<Payment>{
+        return this.httpClient.get<Payment>(`${this.route}/view/${idPayment}`);
     }
 
     getAllFromClient(idClient: string): Observable<Payment[]>{

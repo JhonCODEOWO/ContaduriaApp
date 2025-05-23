@@ -9,4 +9,5 @@ export interface Payment {
     payedBy: Client;
     issuedBy: User;
     details: string;
+    payment_concept: string;
 }
