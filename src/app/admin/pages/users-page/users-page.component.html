@@ -9,5 +9,6 @@
         } @else {
             <app-loader/>
         }
+        <pagination-component [items]="userResponse()?.items ?? 0" [limit]="userResponse()?.limit ?? '0'"/>
     </div>
 </div>

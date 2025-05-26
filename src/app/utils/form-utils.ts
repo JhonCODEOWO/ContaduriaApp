@@ -81,6 +81,19 @@ export class FormUtils {
     return control.errors && control.touched;
   }
 
+  //Verify if a control is ready to apply check function
+  static isReadyToCheck(fieldName: string, form: FormGroup): boolean{
+    const control = form.controls[fieldName];
+
+    //Check if value has a data different of null or undefined
+    if(control.value != null && control.value != undefined){
+      console.log(typeof control.value);
+      if(typeof control.value === 'string' && control.value.trim().length > 0) return true;
+    }
+
+    return (control.pristine)? false: true;
+  }
+
   static getFieldError(fieldName: string, form: FormGroup): string | null {
     if (!form.controls[fieldName]) return null;
 

@@ -7,25 +7,25 @@
             <div class="avatar avatar-placeholder">
                 <div class="bg-neutral text-neutral-content w-32 rounded-full">
                     <span class="text-5xl">
-                        {{userForm.controls.name.value![0]}}
+                        {{(userForm.controls.name.value)? userForm.controls.name.value[0]: '?'}}
                     </span>
                     <span class="text-5xl">
-                        {{userForm.controls.lastName.value![0]}}
+                        {{ (userForm.controls.lastName.value)? userForm.controls.lastName.value[0]: ''}}
                     </span>
                 </div>
             </div>
             <button type="submit" class="btn btn-success">Guardar usuario</button>
         </div>
         <div>
-            <app-input-field id="name" lblText="Nombre" type="text" [formGroup]="userForm" />
-            <app-input-field id="lastName" lblText="Apellidos" type="text" [formGroup]="userForm" />
+            <app-input-field id="name" lblText="Nombre" type="text" [formGroup]="userForm" placeholder="Juan, Jaime, Pablo etc..."/>
+            <app-input-field id="lastName" lblText="Apellidos" type="text" [formGroup]="userForm" placeholder="Escribe los apellidos separados por espacio"/>
         </div>
     </div>
-    <app-input-field id="email" lblText="Correo electrónico" type="email" [formGroup]="userForm" />
-    <app-input-field id="phone_number" lblText="Numero telefónico" type="text" [formGroup]="userForm" />
+    <app-input-field id="email" lblText="Correo electrónico" type="email" [formGroup]="userForm" placeholder="Correo electrónico vigente del usuario"/>
+    <app-input-field id="phone_number" lblText="Numero telefónico" type="text" [formGroup]="userForm" placeholder="Número telefónico vigente del usuario"/>
     <app-input-field id="password" lblText="Escriba la contraseña para el usuario" type="password"
-        [formGroup]="userForm" />
-    <app-input-field id="passwordVerify" lblText="Re-escribe la contraseña" type="password" [formGroup]="userForm" />
+        [formGroup]="userForm" placeholder="Escribe una contraseña para el usuario"/>
+    <app-input-field id="passwordVerify" lblText="Re-escribe la contraseña" type="password" [formGroup]="userForm" placeholder="Confirma la contraseña anterior"/>
 </form>
 
 <!-- Se renderizarán los roles siempre y cuando sean diferentes de null. -->

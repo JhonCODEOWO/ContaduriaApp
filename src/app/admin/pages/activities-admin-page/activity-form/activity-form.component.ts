@@ -56,7 +56,7 @@ export class ActivityFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.usersService
-      .getUsers()
+      .getUsers({})
       .pipe(
         map(
           (data): SelectData[] =>

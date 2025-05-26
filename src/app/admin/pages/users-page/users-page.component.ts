@@ -5,27 +5,35 @@ import { UserResponse } from '../../../users/interfaces/user-response.interface'
 import { UsersListComponent } from "../../../users/components/users-list/users-list.component";
 import { CreateBtnComponent } from "../../../common/components/crud/create-btn/create-btn.component";
 import { LoaderComponent } from '../../../common/components/loader/loader.component';
+import { PaginationComponentComponent } from "../../../common/components/pagination-component/pagination-component.component";
+import { PaginationService } from '../../../common/components/pagination-component/pagination.service';
 
 @Component({
   selector: 'app-users-page',
-  imports: [TitleComponent, UsersListComponent, CreateBtnComponent, LoaderComponent],
+  imports: [TitleComponent, UsersListComponent, CreateBtnComponent, LoaderComponent, PaginationComponentComponent],
   templateUrl: './users-page.component.html',
 })
 export class UsersPageComponent {
   userService = inject(UsersService);
   userResponse = signal<UserResponse | null>(null);
+  currentPage = inject(PaginationService);
 
   loadUsers = effect((onCleanUp)=> {
-    const getUsers = this.getUsers();
+    this.userResponse.set(null);
+    const getUsers = this.getUsers((this.currentPage.pageInUrl() - 1) * 8);
 
     onCleanUp(()=> {
       getUsers.unsubscribe();
     })
   })
 
-  getUsers() {
-    return this.userService.getUsers().subscribe((data)=> {
+  getUsers(offset: number) {
+    return this.userService.getUsers({offset}).subscribe((data)=> {
       this.userResponse.set(data);
     })
+  }
+
+  handlePageSelected(page: number) {
+    
   }
 }

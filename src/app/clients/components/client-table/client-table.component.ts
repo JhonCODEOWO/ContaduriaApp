@@ -43,7 +43,7 @@ export class ClientTableComponent {
     if(this.loading()) return
     this.loading.set(true);
     // this.toastService.saveToast({styleClass: this.stylesEnum.SUCCESSFUL, txtToast: 'Cargando...'});
-    this.userService.getUsers().subscribe(userResponse => {
+    this.userService.getUsers({}).subscribe(userResponse => {
       this.onUserClick.emit({users: userResponse?.data ?? [], client: id})
       this.loading.set(false);
       // this.toastService.deleteToast();

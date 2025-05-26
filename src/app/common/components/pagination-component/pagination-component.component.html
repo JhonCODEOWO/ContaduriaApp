@@ -1,0 +1,10 @@
+<div class="flex flex-col items-center gap-y-3">
+    <div class="join flex justify-center w-full mt-3">
+        <button class="join-item btn" (click)="onBeforeClick()">«</button>
+        <button class="join-item btn">{{page()}}</button>
+        <button class="join-item btn" (click)="onNextClick()">»</button>
+    </div>
+    <div>
+        <p>Mostrando {{limit()}} elementos por página de {{items()}} registros</p>
+    </div>
+</div>

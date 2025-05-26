@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { UserResponse } from '../interfaces/user-response.interface';
 import { ToastService } from '../../common/components/toast-component/service/toast.service';
 import { StylesToast } from '../../common/components/toast-component/toast.component';
+import { PaginationOpts } from '../../common/components/pagination-component/interfaces/pagination-opts.interface';
 
 const route = '/auth/users';
 
@@ -28,8 +29,9 @@ export class UsersService {
   httpClient = inject(HttpClient);
   toastService = inject(ToastService);
 
-  getUsers(): Observable<UserResponse | null>{
-    return this.httpClient.get<UserResponse>(`${environment.API_URL}${route}`).pipe(
+  getUsers(options: PaginationOpts): Observable<UserResponse | null>{
+    const {limit = 8, offset = 0} = options;
+    return this.httpClient.get<UserResponse>(`${environment.API_URL}${route}`, {params: {limit, offset}}).pipe(
       delay(2000),
       catchError(() => {
         return of(null);
