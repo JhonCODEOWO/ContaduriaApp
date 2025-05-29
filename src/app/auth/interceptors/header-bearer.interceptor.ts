@@ -19,8 +19,10 @@ export const headerBearerInterceptor: HttpInterceptorFn = (req, next) => {
   //Return the request if it has an error then realize actions to manage it
   return next(newReq).pipe(catchError((error: any) => {
     if(error instanceof HttpErrorResponse){
-      toastService.saveToast({styleClass: StylesToast.ERROR, txtToast: 'Error de credenciales, la sesión ha caducado o no tienes permisos para realizar la operación'});
-      if(error.status === 401) router.navigateByUrl('login'); 
+      if(error.status === 401) {
+        toastService.saveToast({styleClass: StylesToast.ERROR, txtToast: 'Error de credenciales, la sesión ha caducado o no tienes permisos para realizar la operación'});
+        router.navigateByUrl('login');
+      } 
     }
     return of(error);
   }));

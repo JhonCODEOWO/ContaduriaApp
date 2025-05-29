@@ -2,7 +2,7 @@ import { Component, inject, OnInit, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { firstValueFrom, map } from 'rxjs';
+import { firstValueFrom, map, tap } from 'rxjs';
 import { ClientsService } from '../../../../clients/services/clients.service';
 import { UsersService } from '../../../../users/services/user.service';
 import { TextareaInputComponent } from '../../../../common/components/forms/textarea-input/textarea-input.component';
@@ -55,8 +55,9 @@ export class ActivityFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    //Load data to show in the select of users
     this.usersService
-      .getUsers({exclude_pagination: true})
+      .getUsers({ exclude_pagination: true })
       .pipe(
         map(
           (data): SelectData[] =>
@@ -69,15 +70,20 @@ export class ActivityFormComponent implements OnInit {
       .subscribe((data) => this.users.set(data));
 
     if (this.activityID() === 'new') return;
-    console.log('No es new');
 
-    this.activityService.get(this.activityID() ?? '').subscribe({
-      next: (activity) => this.loadForm(activity),
-      error: (req_error) => {
-        this.error.emit(req_error);
-        this.location.back();
-      },
-    });
+    //Get activity by id and load data to the form
+    this.activityService
+      .get(this.activityID() ?? '')
+      .pipe(tap((activity) => this.loadForm(activity)))
+      .subscribe({
+        next: (activity) => {
+          this.getClients(activity.appliesTo.id);
+        },
+        error: (req_error) => {
+          this.error.emit(req_error);
+          this.location.back();
+        },
+      });
   }
 
   loadForm(activity: Activity) {
@@ -110,9 +116,12 @@ export class ActivityFormComponent implements OnInit {
   }
 
   handleValueSelected(value: string) {
-    // this.loading.set(true);
-    this.clientsService
-      .getClientsAssignedToUser(value)
+    this.getClients(value);
+  }
+
+  getClients(idUser: string) {
+    return this.clientsService
+      .getClientsAssignedToUser(idUser)
       .pipe(
         map((data): SelectData[] =>
           data.clientAssigned.map((clientRelatedResponse) => ({
@@ -125,7 +134,7 @@ export class ActivityFormComponent implements OnInit {
         next: (data) => {
           this.loading.set(false);
           this.clients.set(data);
-        }
+        },
       });
   }
 }
