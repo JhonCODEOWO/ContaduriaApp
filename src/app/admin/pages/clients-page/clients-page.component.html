@@ -1,12 +1,13 @@
-@if (clients()) {
+@if (clients() && getAllResponse()) {
     <div>
         <div class="flex justify-between">
             <app-title title="Clientes" />
             <crud-create-btn link="/admin/clients/new" />
         </div>
-        <client-table [clients]="clients()!" (onClientDeleted)="clientDeleted($event)"
-            (onUserClick)="usersClicked($event)" />
+        <client-table [clients]="clients()!" (onClientDeleted)="handleClientDeleted($event)"
+            (onUserClick)="handleUsersClicked($event)" />
         <client-modal-user [usersAndClient]="usersAndClient()" (onClientAffected)="clientAffected($event)"/>
+        <pagination-component [items]="getAllResponse()?.items ?? 0" [limit]="getAllResponse()?.limit ?? '0'" />
     </div>
 } @else {
     <div class="loaderPlacement">

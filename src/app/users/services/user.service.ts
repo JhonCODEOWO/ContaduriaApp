@@ -30,8 +30,8 @@ export class UsersService {
   toastService = inject(ToastService);
 
   getUsers(options: PaginationOpts): Observable<UserResponse | null>{
-    const {limit = 8, offset = 0} = options;
-    return this.httpClient.get<UserResponse>(`${environment.API_URL}${route}`, {params: {limit, offset}}).pipe(
+    const {limit = 8, offset = 0, exclude_pagination = false} = options;
+    return this.httpClient.get<UserResponse>(`${environment.API_URL}${route}`, {params: {limit, offset, exclude_pagination}}).pipe(
       delay(2000),
       catchError(() => {
         return of(null);

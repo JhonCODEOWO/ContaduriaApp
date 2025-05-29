@@ -6,3 +6,10 @@ export interface UserResponse {
     limit: string,
     offset: string,
 }
+
+export interface GetAllResponse<T> {
+    data: T[],
+    items: number,
+    limit: string,
+    offset: string,
+}

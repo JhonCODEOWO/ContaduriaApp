@@ -66,7 +66,6 @@ export class PaymentFormComponent {
       this.paymentService.create(data).subscribe(payment => console.log(payment));
       return;
     }
-    //TODO UPDATE
-    console.error('No se ha realizado la acción para editar');
+    this.paymentService.update(this.payment()?.id ?? '', data).subscribe(data => console.log(data));
   }
 }

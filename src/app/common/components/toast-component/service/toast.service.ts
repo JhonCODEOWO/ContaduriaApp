@@ -14,9 +14,7 @@ export class ToastService {
   deleteToast(index: number){
     this.toast.update(toasts => {
       if(!toasts) return null;
-
-      toasts.splice(index, 1)
-      return toasts;
+      return toasts.filter((toast, indexToast) => indexToast != index);
     });
   }
 

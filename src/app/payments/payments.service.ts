@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { Payment } from './interfaces/payment.interface';
 
 @Injectable({providedIn: 'root'})
@@ -25,5 +25,9 @@ export class PaymentsService {
 
     getPDF(idPayment: string): Observable<Blob>{
         return this.httpClient.get(`${this.routePDF}/${idPayment}`, {responseType: 'blob'});
+    }
+
+    update(id: string, payment: Partial<Payment>){
+        return this.httpClient.patch(`${this.route}/${id}`, payment);
     }
 }

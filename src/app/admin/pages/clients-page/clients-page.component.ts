@@ -4,46 +4,57 @@ import { ClientTableComponent, UsersAndClient } from "../../../clients/component
 import { Client } from '../../../clients/interfaces/client.interface';
 import { TitleComponent } from "../../../common/components/title/title.component";
 import { CreateBtnComponent } from "../../../common/components/crud/create-btn/create-btn.component";
-import { UserResponse } from '../../../users/interfaces/user-response.interface';
+import { GetAllResponse, UserResponse } from '../../../users/interfaces/user-response.interface';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientModalUserComponent, ClientUserRelationDone } from "./client-modal-user/client-modal-user.component";
 import { User } from '../../../users/interfaces/user.interface';
 import { LoaderComponent } from '../../../common/components/loader/loader.component';
+import { PaginationComponentComponent } from '../../../common/components/pagination-component/pagination-component.component';
+import { PaginationService } from '../../../common/components/pagination-component/pagination.service';
 
 @Component({
   selector: 'app-clients-page',
-  imports: [ClientTableComponent, TitleComponent, CreateBtnComponent, CreateBtnComponent, ReactiveFormsModule, ClientModalUserComponent,LoaderComponent],
+  imports: [ClientTableComponent, TitleComponent, CreateBtnComponent, CreateBtnComponent, ReactiveFormsModule, ClientModalUserComponent,LoaderComponent, PaginationComponentComponent],
   templateUrl: './clients-page.component.html',
 })
 export class ClientsPageComponent {
   clientsService = inject(ClientsService);
+  page = inject(PaginationService).pageInUrl;
+
   clients = signal<Client[] | null >(null);
+  getAllResponse = signal<GetAllResponse<Client> | null>(null);
   usersAndClient = signal<UsersAndClient | null>(null);
+  loading = signal<boolean>(false);
 
   loadClients = effect((onCleanup)=> {
-    const requestClients = this.getClients();
+    this.clients.set(null);
+    this.getAllResponse.set(null);
+    const requestClients = this.getClients((this.page() - 1) * 5);
 
     onCleanup(()=> {
+      if(requestClients)
       requestClients.unsubscribe();
     })
   })
 
-  getClients(){
-    return this.clientsService.getClients().subscribe( data =>{
-      this.clients.set(data);
+  getClients(offset: number){
+    return this.clientsService.getClients({offset}).subscribe( data =>{
+      this.clients.set(data?.data ?? []);
+      this.getAllResponse.set(data);
     })
   }
 
-  clientDeleted(id: string){
-    //Encontrar el objeto que cambio en el arreglo del padre por indice
-    const index = this.clients()!.findIndex(client => client.id === id);
-    const client = this.clients()![index];
-    
-    client.active = (client.active)? false: true;
+  handleClientDeleted(id: string){
+    //Actualizar el estado del id recibido
+    this.clients.update(clients => {
+      if(!this.clients()) return null;
+
+      return clients!.map(client => client.id === id ? ({...client, active: (client.active)? false: true}): client)
+    });
   }
 
   //Evento que controla cuando un hijo emite un valor UserAndClient y se asigna a la propiedad que toma el modal.
-  usersClicked(usersWithClient: UsersAndClient){
+  handleUsersClicked(usersWithClient: UsersAndClient){
     this.usersAndClient.set(usersWithClient);
   }
 

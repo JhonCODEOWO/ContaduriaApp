@@ -9,13 +9,10 @@ import { AlertErrorComponent } from '../../../common/components/alert-error/aler
 
 @Component({
   selector: 'app-login-page',
-  imports: [ReactiveFormsModule, InputFieldComponent, AlertErrorComponent],
+  imports: [ReactiveFormsModule, InputFieldComponent],
   templateUrl: './login-page.component.html',
 })
 export class LoginPageComponent {
-  constructor() {
-    console.log(environment.API_URL);
-  }
   fb = inject(FormBuilder);
   router = inject(Router);
   formUtils = FormUtils;
@@ -35,13 +32,15 @@ export class LoginPageComponent {
     if (this.loginForm.invalid) return;
     let email: string = this.loginForm.controls['email'].value!;
     let password: string = this.loginForm.controls['password'].value!;
-    this.authService.login(email, password).subscribe((data) => {
-      if(data) {
-        this.router.navigateByUrl('employees');
-        return;
+    this.authService.login(email, password).subscribe({
+      next: (logged) => {
+        if(logged) {
+          this.router.navigateByUrl('employees');
+          return;
+        }
+        this.error.set(true);
       }
-      this.error.set(true);
     });
-    this.loginForm.reset();
+    // this.loginForm.reset();
   }
 }

@@ -7,6 +7,8 @@ import { Client } from '../interfaces/client.interface';
 import { ClientRelated } from '../interfaces/client-assigned.interface';
 import { UsersService } from '../../users/services/user.service';
 import { ClientRelatedResponse } from '../interfaces/client-related-response.interface';
+import { GetAllResponse } from '../../users/interfaces/user-response.interface';
+import { PaginationOpts } from '../../common/components/pagination-component/interfaces/pagination-opts.interface';
 
 const newClient: Client = {
   id: 'new',
@@ -42,14 +44,15 @@ export class ClientsService {
   router = inject(Router);
   userService = inject(UsersService);
   
-  getClients(): Observable<Client[]>{
-    return this.http.get<Client[]>(`${this.route}`).pipe(
+  getClients(opts: PaginationOpts): Observable<GetAllResponse<Client> | null>{
+    const {limit = 5, offset = 0} = opts;
+    return this.http.get<GetAllResponse<Client>>(`${this.route}`, {params: {limit, offset}}).pipe(
       delay(1500),
       catchError((response) => {
         if(response.error.statusCode == 401) {
           this.router.navigate(['login']);
         }
-        return of([])
+        return of(null)
       })
     );
   }

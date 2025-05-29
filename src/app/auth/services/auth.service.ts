@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { AuthResponse } from '../interfaces/auth-response.interface';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../common/components/toast-component/service/toast.service';
+import { StylesToast } from '../../common/components/toast-component/toast.component';
 
 type AuthStatus = 'authenticated' | 'not-authenticated' | 'checking';
 
@@ -17,6 +19,7 @@ export class AuthService {
   routeApi = '/auth'
   httpClient = inject(HttpClient);
   router = inject(Router);
+  toastService = inject(ToastService);
 
   private _user = signal<UserSession | null>(null);
   private _authStatus = signal<AuthStatus>('checking');

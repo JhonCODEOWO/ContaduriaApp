@@ -56,7 +56,7 @@ export class ActivityFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.usersService
-      .getUsers({})
+      .getUsers({exclude_pagination: true})
       .pipe(
         map(
           (data): SelectData[] =>
@@ -110,14 +110,14 @@ export class ActivityFormComponent implements OnInit {
   }
 
   handleValueSelected(value: string) {
-    this.loading.set(true);
+    // this.loading.set(true);
     this.clientsService
       .getClientsAssignedToUser(value)
       .pipe(
         map((data): SelectData[] =>
-          data.clientAssigned.map((client) => ({
-            id: client.id ?? '',
-            optionText: client.client.fullName,
+          data.clientAssigned.map((clientRelatedResponse) => ({
+            id: clientRelatedResponse.client.id ?? '',
+            optionText: clientRelatedResponse.client.fullName,
           }))
         )
       )

@@ -29,8 +29,11 @@ export enum StylesToast {
   templateUrl: './toast-component.component.html',
 })
 export class ToastComponent implements OnInit, AfterViewInit {
+  closeToastIndex = output<number>();
+
   styleToast = input.required<StylesToast>();
   txtToast = input.required<string>();
+  index = input.required<number>();
   heighToast = signal<number>(0); //Property to apply class bottom to each component
   multiplier = input<number>(0);
 
@@ -50,5 +53,9 @@ export class ToastComponent implements OnInit, AfterViewInit {
   defineMargin(actualBottom: number){
     if(this.multiplier() === 0) return actualBottom + 5;
     return Math.round(actualBottom/6);
+  }
+
+  onCloseClick(index: number){
+    this.closeToastIndex.emit(index);
   }
 }

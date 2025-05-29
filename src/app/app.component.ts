@@ -19,4 +19,8 @@ export class AppComponent {
   //     this.toastService.deleteToast(0)
   //   }, 5000)
   // })
+
+  handleCloseToastIndex(index: number){
+    this.toastService.deleteToast(index);
+  }
 }

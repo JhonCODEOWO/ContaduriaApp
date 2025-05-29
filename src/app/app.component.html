@@ -3,7 +3,7 @@
 @if (toastService.hasToast) {
 <div>
     @for (item of this.toastService.getToast; track $index) {
-    <app-toast [styleToast]="item.styleClass" [txtToast]="item.txtToast" [multiplier]="$index"/>
+    <app-toast [styleToast]="item.styleClass" [txtToast]="item.txtToast" [multiplier]="$index" [index]="$index" (closeToastIndex)="handleCloseToastIndex($event)"/>
     }
 </div>
 }

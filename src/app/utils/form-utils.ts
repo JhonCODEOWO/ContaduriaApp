@@ -87,7 +87,6 @@ export class FormUtils {
 
     //Check if value has a data different of null or undefined
     if(control.value != null && control.value != undefined){
-      console.log(typeof control.value);
       if(typeof control.value === 'string' && control.value.trim().length > 0) return true;
     }
 
